@@ -60,7 +60,7 @@
   --text-xl: 1.9531rem;
   --text-2xl: 2.4414rem;
   --text-display: clamp(2.75rem, 6.5vw, 5.75rem);
-  --text-statement: clamp(2.25rem, 7vw, 5.5rem);
+  --text-statement: clamp(1.4rem, 7.5vw, 4.5rem);
   --text-email: clamp(1.5rem, 5.5vw, 4.5rem);
 
   /* Spacing, 4pt */

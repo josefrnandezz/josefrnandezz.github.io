@@ -35,7 +35,7 @@ const links = socials.filter((s): s is Required<SocialLink> => Boolean(s.url));
 <style>
   .contact {
     position: relative;
-    margin-top: var(--space-3xl);
+    margin-top: clamp(var(--space-xl), 10vw, var(--space-3xl));
     background: var(--color-accent);
     color: var(--color-on-accent);
     isolation: isolate;
@@ -54,29 +54,35 @@ const links = socials.filter((s): s is Required<SocialLink> => Boolean(s.url));
 
   .contact__inner {
     display: grid;
-    gap: var(--space-lg);
-    padding-block: var(--space-3xl) var(--space-2xl);
+    gap: clamp(var(--space-md), 3.5vw, var(--space-lg));
+    padding-block: clamp(var(--space-xl), 8vw, var(--space-3xl))
+      clamp(var(--space-lg), 6vw, var(--space-2xl));
   }
 
+  /* One line, always. The size is driven by vw so the ratio between the text
+     width and the viewport stays constant — it fits at every width or none. */
   .contact__title {
     font-size: var(--text-statement);
     font-weight: 800;
-    line-height: 0.95;
+    line-height: 1.05;
     letter-spacing: -0.035em;
     text-transform: lowercase;
-    max-width: 14ch;
+    white-space: nowrap;
+    overflow-wrap: normal;
   }
 
   .contact__feature {
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-sm) var(--space-xl);
+    gap: var(--space-sm) clamp(var(--space-md), 4vw, var(--space-xl));
   }
 
+  /* Fluid alongside the title: at a fixed --text-xl these out-shouted the
+     heading on narrow screens and inverted the hierarchy. */
   .contact__feature a {
     font-family: var(--font-display);
-    font-size: var(--text-xl);
+    font-size: clamp(var(--text-base), 4.7vw, var(--text-xl));
     font-weight: 700;
     line-height: 1;
     letter-spacing: -0.02em;
@@ -95,7 +101,7 @@ const links = socials.filter((s): s is Required<SocialLink> => Boolean(s.url));
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-    margin-top: var(--space-lg);
+    margin-top: clamp(var(--space-2xs), 2.5vw, var(--space-lg));
     padding-top: var(--space-sm);
     border-top: var(--rule-thin) solid var(--color-on-accent);
   }
