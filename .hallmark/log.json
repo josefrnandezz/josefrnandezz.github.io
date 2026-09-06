@@ -3,6 +3,17 @@
     "date": "2026-09-06",
     "macrostructure": "Split Studio",
     "theme": "custom",
+    "theme_axes": "light / display-heavy / chromatic-other",
+    "vibe": "teal seco, tinta única de chroma baja sobre papel frío casi neutro",
+    "enrichment": "E8 portrait slot (real photo, src/assets/portrait.png)",
+    "nav": "N7 (no wordmark)",
+    "footer": "Ft2",
+    "brief": "Palette-only redesign #3: \"más fresca y llamativa pero no estridente\" + \"minimalista\". Sale el duotono terracota/navy, entra una sola tinta sobre papel frío casi neutro (97.5% 0.004 200). Se compararon tres candidatas sobre la estructura real (esmeralda 161, teal 205, índigo 264) con una previsualización local; el usuario eligió teal (49% 0.08 205) por ser la más contenida — chroma baja deliberada, lee casi como gris con temperatura. accent-2 degradado de segunda tinta navy a un oscuro casi gris (33% 0.028 220) para que placas y sombras lean como profundidad y no como color. Banda de contacto se mantiene rellena por decisión explícita del usuario. Favicon actualizado. Contrastes AA y gamut sRGB verificados en claro y oscuro; estructura, tipografía y espaciado intactos."
+  },
+  {
+    "date": "2026-09-06",
+    "macrostructure": "Split Studio",
+    "theme": "custom",
     "theme_axes": "light / display-heavy / warm",
     "vibe": "bespoke identity pass: tried Fraunces display face, user reverted to Bricolage Grotesque; kept accent-coloured bullet markers + CSS grain on contact band; new portrait photo; Mercadona bullets rewritten, React+Kubernetes added to every role's stack; nav wordmark removed (redundant with hero name directly below it), nav CTA now scrolls to #contact instead of mailto; Contact section rebuilt quiet (no full-bleed fill, single rule above like other sections) with the X profile as the featured link instead of the email",
     "enrichment": "E8 portrait slot (real photo, src/assets/portrait.png)",
