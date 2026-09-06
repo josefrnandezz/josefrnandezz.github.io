@@ -1,0 +1,88 @@
+---
+/* Ft5 · Statement footer. Doubles as the Contact section. */
+import type { SocialLink } from '../data/profile';
+
+interface Props {
+  email: string;
+  location: string;
+  socials: SocialLink[];
+}
+
+const { email, location, socials } = Astro.props;
+const links = socials.filter((s): s is Required<SocialLink> => Boolean(s.url));
+---
+
+<footer id="contact" class="foot" aria-label="Contact">
+  <div class="foot__inner wrap">
+  <p class="foot__line">
+    Building something? <a class="foot__cta nowrap" href={`mailto:${email}`}>Let’s talk.</a>
+  </p>
+  <div class="foot__meta small">
+    <ul class="foot__links">
+      <li><a class="nowrap" href={`mailto:${email}`}>{email}</a></li>
+      {
+        links.map((link) => (
+          <li>
+            <a class="nowrap" href={link.url} rel="me">
+              {link.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+    <p class="nowrap muted">{location}</p>
+  </div>
+  </div>
+</footer>
+
+<style>
+  .foot {
+    margin-top: var(--space-3xl);
+    border-top: var(--rule-thick) solid var(--color-rule);
+  }
+
+  .foot__inner {
+    padding-block: var(--space-3xl) var(--space-xl);
+    display: grid;
+    gap: var(--space-xl);
+  }
+
+  .foot__line {
+    font-family: var(--font-display);
+    font-size: var(--text-statement);
+    font-weight: 800;
+    line-height: 1.02;
+    letter-spacing: -0.02em;
+    max-width: 18ch;
+  }
+
+  .foot__cta {
+    color: var(--color-accent);
+    text-decoration-color: transparent;
+    text-decoration-thickness: 0.04em;
+    text-underline-offset: 0.1em;
+  }
+
+  .foot__cta:hover,
+  .foot__cta:focus-visible,
+  .foot__cta:active {
+    text-decoration-color: var(--color-accent);
+  }
+
+  .foot__meta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-sm) var(--space-xl);
+    padding-top: var(--space-sm);
+    border-top: var(--rule-thin) solid var(--color-rule);
+  }
+
+  .foot__links {
+    list-style: none;
+    display: flex;
+    flex-wrap: wrap;
+    gap: var(--space-xs) var(--space-lg);
+  }
+</style>

@@ -1,0 +1,84 @@
+---
+import { getCollection } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Nav from '../components/Nav.astro';
+import SectionHead from '../components/SectionHead.astro';
+import Experience from '../components/Experience.astro';
+import Skills from '../components/Skills.astro';
+import Talks from '../components/Talks.astro';
+import Writing from '../components/Writing.astro';
+import Footer from '../components/Footer.astro';
+import { profile } from '../data/profile';
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+---
+
+<Base title={`${profile.name} · ${profile.role}`} description={profile.description}>
+  <Nav handle={profile.handle} email={profile.email} />
+
+  <main id="main">
+    <section class="hero wrap">
+      <h1 class="display-xxl">Jose<br />Fernández<br />Alhama</h1>
+    </section>
+
+    <hr class="rule-thick" />
+
+    <div class="wrap">
+      <section aria-labelledby="about">
+        <SectionHead id="about" title="About" tight />
+        <div class="prose about">
+          <p class="lede">{profile.about.lede}</p>
+          <p>{profile.about.body}</p>
+        </div>
+      </section>
+
+      <section aria-labelledby="experience">
+        <SectionHead id="experience" title="Experience" />
+        <Experience roles={profile.experience} />
+      </section>
+
+      <section aria-labelledby="skills">
+        <SectionHead id="skills" title="Skills" />
+        <Skills rows={profile.skills} />
+      </section>
+
+      <section aria-labelledby="talks">
+        <SectionHead id="talks" title="Talks & certifications" />
+        <Talks talks={profile.talks} certifications={profile.certifications} />
+      </section>
+
+      <Writing posts={posts} />
+    </div>
+  </main>
+
+  <Footer email={profile.email} location={profile.location} socials={profile.socials} />
+</Base>
+
+<style>
+  /* H1 · Marquee: the name fills the fold, bottom-left, no subhead, no CTA. */
+  .hero {
+    min-height: 80dvh;
+    display: grid;
+    align-content: end;
+    padding-block: var(--space-xl) var(--space-2xl);
+  }
+
+  .display-xxl {
+    font-size: var(--text-display);
+    font-weight: 800;
+    line-height: 0.92;
+    letter-spacing: -0.03em;
+  }
+
+  .about .lede {
+    font-size: var(--text-md);
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  .about > * + * {
+    margin-top: var(--space-lg);
+  }
+</style>

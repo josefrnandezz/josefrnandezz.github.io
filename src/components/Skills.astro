@@ -1,0 +1,29 @@
+---
+import type { SkillRow } from '../data/profile';
+
+interface Props {
+  rows: SkillRow[];
+}
+
+const { rows } = Astro.props;
+---
+
+<dl class="skills">
+  {
+    rows.map((row) => (
+      <div class="row">
+        <dt class="skills__label">{row.label}</dt>
+        <dd class="row__body">{row.items.join(', ')}</dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  .skills__label {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-base);
+    line-height: 1.55;
+  }
+</style>

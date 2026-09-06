@@ -1,0 +1,20 @@
+---
+/* S2 · Hanging section head. No rule, no eyebrow, no number. */
+interface Props {
+  title: string;
+  id: string;
+  tight?: boolean;
+}
+
+const { title, id, tight = false } = Astro.props;
+---
+
+<header class:list={['head-hang', { 'head-hang--tight': tight }]}>
+  <h2 id={id}>{title}</h2>
+</header>
+
+<style>
+  .head-hang--tight {
+    padding-block-start: var(--space-2xl);
+  }
+</style>

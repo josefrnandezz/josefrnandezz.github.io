@@ -1,0 +1,47 @@
+---
+import type { Talk, Certification } from '../data/profile';
+
+interface Props {
+  talks: Talk[];
+  certifications: Certification[];
+}
+
+const { talks, certifications } = Astro.props;
+---
+
+<ul class="talks">
+  {
+    talks.map((talk) => (
+      <li class="row">
+        <p class="row__label">{talk.year}</p>
+        <div class="row__body">
+          <p class="talks__event">Speaker · {talk.event}</p>
+          <p>{talk.title}</p>
+        </div>
+      </li>
+    ))
+  }
+  {
+    certifications.map((cert) => (
+      <li class="row">
+        <p class="row__label">Certified</p>
+        <div class="row__body">
+          <p class="talks__event">{cert.name}</p>
+          <p>{cert.issuer}</p>
+        </div>
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .talks {
+    list-style: none;
+  }
+
+  .talks__event {
+    font-family: var(--font-display);
+    font-weight: 700;
+    line-height: 1.3;
+  }
+</style>

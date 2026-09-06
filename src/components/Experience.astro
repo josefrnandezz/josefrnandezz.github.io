@@ -1,0 +1,61 @@
+---
+import type { Role } from '../data/profile';
+
+interface Props {
+  roles: Role[];
+}
+
+const { roles } = Astro.props;
+---
+
+<ol class="roles">
+  {
+    roles.map((role) => (
+      <li class="row">
+        <p class="row__label">
+          <time>{role.start}</time> – <time>{role.end}</time>
+        </p>
+        <div class="row__body">
+          <h3 class="role">
+            {role.title} <span class="company">· {role.company}</span>
+          </h3>
+          <ul class="bullets">
+            {role.bullets.map((bullet) => (
+              <li>{bullet}</li>
+            ))}
+          </ul>
+          {role.stack && <p class="stack small muted">{role.stack.join(' · ')}</p>}
+        </div>
+      </li>
+    ))
+  }
+</ol>
+
+<style>
+  .roles {
+    list-style: none;
+  }
+
+  .role {
+    font-size: var(--text-md);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+
+  .company {
+    font-weight: 500;
+    color: var(--color-muted);
+  }
+
+  .bullets {
+    list-style: square;
+    padding-left: var(--space-lg);
+    margin-top: var(--space-sm);
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .stack {
+    margin-top: var(--space-sm);
+  }
+</style>

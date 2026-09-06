@@ -1,0 +1,79 @@
+---
+import { getCollection, render } from 'astro:content';
+import Base from '../../layouts/Base.astro';
+import Nav from '../../components/Nav.astro';
+import Footer from '../../components/Footer.astro';
+import { profile } from '../../data/profile';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+
+const date = post.data.date.toLocaleDateString('en-GB', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+---
+
+<Base title={`${post.data.title} · ${profile.name}`} description={post.data.description}>
+  <Nav handle={profile.handle} email={profile.email} />
+
+  <main id="main" class="wrap post">
+    <header class="post__head">
+      <p class="mono muted">
+        <time datetime={post.data.date.toISOString()}>{date}</time>
+      </p>
+      <h1 class="post__title">{post.data.title}</h1>
+      <p class="post__desc">{post.data.description}</p>
+    </header>
+
+    <hr class="rule-thick" />
+
+    <article class="prose post__body">
+      <Content />
+    </article>
+
+    <p class="post__back"><a href="/">← Back home</a></p>
+  </main>
+
+  <Footer email={profile.email} location={profile.location} socials={profile.socials} />
+</Base>
+
+<style>
+  .post {
+    padding-block: var(--space-2xl) 0;
+  }
+
+  .post__head {
+    display: grid;
+    gap: var(--space-sm);
+    max-width: var(--measure);
+    padding-block-end: var(--space-xl);
+  }
+
+  .post__title {
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.02em;
+  }
+
+  .post__desc {
+    font-size: var(--text-md);
+    line-height: 1.4;
+    color: var(--color-muted);
+  }
+
+  .post__body {
+    padding-block-start: var(--space-xl);
+  }
+
+  .post__back {
+    margin-top: var(--space-2xl);
+  }
+</style>

@@ -1,0 +1,44 @@
+---
+/* N9 · Edge-aligned minimal: handle hard-left, one CTA hard-right, nothing between. */
+interface Props {
+  handle: string;
+  email: string;
+}
+
+const { handle, email } = Astro.props;
+---
+
+<header class="nav-bar">
+  <nav class="nav wrap" aria-label="Primary">
+    <a class="nav__mark mono" href="/">{handle}</a>
+    <a class="nav__cta nowrap" href={`mailto:${email}`}>Email me →</a>
+  </nav>
+</header>
+
+<style>
+  .nav-bar {
+    border-bottom: var(--rule-thin) solid var(--color-rule);
+  }
+
+  .nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: var(--space-lg);
+    padding-block: var(--space-md);
+  }
+
+  .nav__mark {
+    text-decoration: none;
+  }
+
+  .nav__mark:hover {
+    text-decoration-line: underline;
+  }
+
+  .nav__cta {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-base);
+  }
+</style>

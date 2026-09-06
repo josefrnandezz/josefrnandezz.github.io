@@ -1,0 +1,49 @@
+---
+/* Renders nothing until there is at least one post. */
+import type { CollectionEntry } from 'astro:content';
+import SectionHead from './SectionHead.astro';
+
+interface Props {
+  posts: CollectionEntry<'posts'>[];
+}
+
+const { posts } = Astro.props;
+
+const format = (date: Date) =>
+  date.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
+---
+
+{
+  posts.length > 0 && (
+    <section aria-labelledby="writing">
+      <SectionHead id="writing" title="Writing" />
+      <ul class="posts">
+        {posts.map((post) => (
+          <li class="row">
+            <p class="row__label">
+              <time datetime={post.data.date.toISOString()}>{format(post.data.date)}</time>
+            </p>
+            <div class="row__body">
+              <h3 class="posts__title">
+                <a href={`/posts/${post.id}/`}>{post.data.title}</a>
+              </h3>
+              <p class="muted">{post.data.description}</p>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )
+}
+
+<style>
+  .posts {
+    list-style: none;
+  }
+
+  .posts__title {
+    font-size: var(--text-md);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+</style>
