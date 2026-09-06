@@ -16,6 +16,8 @@ const portraits = import.meta.glob<{ default: ImageMetadata }>(
   { eager: true },
 );
 const portrait = Object.values(portraits)[0]?.default;
+/* One word per line: .hero__name is a grid, so each span takes its own row.
+ * Three lines at every width, never two. */
 const [first, ...rest] = name.split(' ');
 ---
 
@@ -23,7 +25,9 @@ const [first, ...rest] = name.split(' ');
   <div class="hero__copy">
     <h1 class="hero__name">
       <span class="hero__first">{first}</span>
-      <span class="hero__rest">{rest.join(' ')}</span>
+      {/* Trailing space keeps the words separate words in the accessible name;
+          it collapses visually because each span is its own grid row. */}
+      {rest.map((word) => <span class="hero__rest">{word} </span>)}
     </h1>
     <p class="hero__lede">{lede}</p>
     <a class="cta-outline" href="#contact">say hello →</a>
