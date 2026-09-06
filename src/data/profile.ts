@@ -16,6 +16,8 @@ export type Certification = { name: string; issuer: string };
 /** A social link without `url` is not rendered. */
 export type SocialLink = { label: string; url?: string };
 
+export type Fact = { label: string; value: string };
+
 export const profile = {
   name: 'Jose Fernández Alhama',
   handle: 'josefrnandezz',
@@ -31,6 +33,14 @@ export const profile = {
     body:
       'I care about the intersection of engineering and product: understanding users, making smart tradeoffs and shipping software that matters. I work with fast feedback loops, clean and maintainable code and close collaboration. XP practices like TDD, pair programming and CI/CD are tools I use to keep delivery predictable, not dogma. I’m at my best contributing beyond the ticket: shaping the problem, challenging assumptions and helping the team move faster together.',
   },
+
+  /** Plain facts for the proof column next to About. */
+  facts: [
+    { label: 'now', value: 'Checkout at Mercadona Tech' },
+    { label: 'based in', value: 'Valencia, Spain' },
+    { label: 'stack', value: 'Python, Django, PostgreSQL' },
+    { label: 'next talk', value: 'Awakatech 2026' },
+  ] satisfies Fact[],
 
   socials: [
     { label: 'LinkedIn', url: 'https://linkedin.com/in/josefrnandezz' },

@@ -29,6 +29,7 @@ body {
   }
 }
 
+/* Display type is lowercase on purpose: it is the page's voice. */
 h1,
 h2,
 h3 {
@@ -72,12 +73,6 @@ a:active {
   outline-offset: 2px;
 }
 
-@media (prefers-reduced-motion: reduce) {
-  a {
-    transition: none;
-  }
-}
-
 /* Layout: left-biased page column, never centred. */
 .wrap {
   max-width: var(--page-max);
@@ -102,12 +97,6 @@ a:active {
   white-space: nowrap;
 }
 
-hr.rule-thick {
-  border: 0;
-  border-top: var(--rule-thick) solid var(--color-rule);
-  margin: 0;
-}
-
 .skip {
   position: absolute;
   left: var(--page-gutter);
@@ -124,17 +113,43 @@ hr.rule-thick {
   top: var(--space-xs);
 }
 
-/* Section head S2: hanging, no rule, no eyebrow. */
-.head-hang {
-  padding-block: var(--space-3xl) var(--space-lg);
+/* CTAs: outlined chip (page) and filled slab (nav, contact). Square corners. */
+.cta-outline,
+.cta-fill {
+  display: inline-block;
+  font-family: var(--font-display);
+  font-weight: 700;
+  line-height: 1;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: transform var(--dur-micro) var(--ease-out);
 }
 
-.head-hang h2 {
-  font-size: var(--text-lg);
-  font-weight: 800;
-  letter-spacing: 0.02em;
-  text-transform: uppercase;
-  line-height: 1.1;
+.cta-outline {
+  padding: var(--space-sm) var(--space-lg);
+  border: var(--rule-thin) solid var(--color-ink);
+}
+
+.cta-fill {
+  padding: var(--space-sm) var(--space-lg);
+  background: var(--color-accent);
+  color: var(--color-on-accent);
+}
+
+.cta-outline:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.cta-fill:hover {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.cta-outline:active,
+.cta-fill:active {
+  transform: translateY(1px);
+  color: var(--color-paper);
 }
 
 /* Rows: 2px rule above, narrow label column on wide viewports. */
@@ -162,6 +177,41 @@ hr.rule-thick {
 .row__body {
   min-width: 0;
   max-width: var(--measure);
+}
+
+/* Scroll reveal, CSS only. Progressive: no support means no motion. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .reveal {
+      animation: reveal linear both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 28%;
+    }
+
+    .reveal--late {
+      animation-range: entry 8% entry 40%;
+    }
+  }
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  a,
+  .cta-outline,
+  .cta-fill {
+    transition: none;
+  }
 }
 
 .prose {
@@ -195,7 +245,7 @@ hr.rule-thick {
 }
 
 .prose blockquote {
-  border-left: var(--rule-thick) solid var(--color-rule);
+  border-left: var(--rule-thick) solid var(--color-accent-2);
   padding-left: var(--space-md);
   color: var(--color-muted);
 }

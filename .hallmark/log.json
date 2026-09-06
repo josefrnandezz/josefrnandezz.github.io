@@ -1,6 +1,15 @@
 [
   {
     "date": "2026-09-06",
+    "macrostructure": "Split Studio",
+    "theme": "Riso",
+    "enrichment": "E8 portrait slot (Tier A CSS-art placeholder)",
+    "nav": "N7",
+    "footer": "Ft2",
+    "brief": "Personal portfolio redesign · lowercase display, vivid inks on flat paper, portrait slot"
+  },
+  {
+    "date": "2026-09-06",
     "macrostructure": "Marquee Hero",
     "theme": "Brutal",
     "enrichment": "none",

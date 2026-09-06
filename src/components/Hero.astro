@@ -1,0 +1,142 @@
+---
+/* H2 · Split diptych: name + lede + chip on the left, portrait on the right.
+ * E8 portrait: drop a file at src/assets/portrait.{jpg,jpeg,png,webp,avif}
+ * and it replaces the CSS-art slot automatically. */
+import { Image } from 'astro:assets';
+
+interface Props {
+  name: string;
+  lede: string;
+  email: string;
+}
+
+const { name, lede, email } = Astro.props;
+
+const portraits = import.meta.glob<{ default: ImageMetadata }>(
+  '../assets/portrait.{jpg,jpeg,png,webp,avif}',
+  { eager: true },
+);
+const portrait = Object.values(portraits)[0]?.default;
+const [first, ...rest] = name.split(' ');
+---
+
+<section class="hero wrap">
+  <div class="hero__copy">
+    <h1 class="hero__name">
+      <span class="hero__first">{first}</span>
+      <span class="hero__rest">{rest.join(' ')}</span>
+    </h1>
+    <p class="hero__lede">{lede}</p>
+    <a class="cta-outline" href={`mailto:${email}`}>say hello →</a>
+  </div>
+
+  <figure class="portrait reveal--late">
+    {
+      portrait ? (
+        <Image
+          class="portrait__img"
+          src={portrait}
+          alt={`Portrait of ${name}`}
+          widths={[480, 720, 960]}
+          sizes="(min-width: 56rem) 26rem, 100vw"
+        />
+      ) : (
+        <div
+          class="portrait__slot"
+          role="img"
+          aria-label={`Portrait of ${name}, photo pending`}
+        >
+          <span class="mono">portrait · pending</span>
+        </div>
+      )
+    }
+  </figure>
+</section>
+
+<style>
+  .hero {
+    display: grid;
+    gap: var(--space-xl);
+    padding-block: var(--space-xl) var(--space-2xl);
+    align-items: end;
+  }
+
+  @media (min-width: 56rem) {
+    .hero {
+      grid-template-columns: 7fr 5fr;
+      gap: var(--space-2xl);
+      padding-block: var(--space-2xl) var(--space-3xl);
+      min-height: 70dvh;
+      align-content: end;
+    }
+  }
+
+  .hero__copy {
+    display: grid;
+    gap: var(--space-lg);
+    justify-items: start;
+  }
+
+  .hero__name {
+    font-size: var(--text-display);
+    font-weight: 800;
+    line-height: 0.95;
+    letter-spacing: -0.035em;
+    text-transform: lowercase;
+    display: grid;
+  }
+
+  /* Riso off-register: the second ink sits a hair behind the first. */
+  .hero__first {
+    color: var(--color-accent-2);
+    text-shadow: 0.05em 0.05em 0 var(--color-accent);
+  }
+
+  .hero__lede {
+    font-size: var(--text-md);
+    line-height: 1.4;
+    max-width: 38ch;
+  }
+
+  .portrait {
+    position: relative;
+    width: 100%;
+    max-width: 26rem;
+    aspect-ratio: 4 / 5;
+    isolation: isolate;
+    justify-self: start;
+  }
+
+  @media (min-width: 56rem) {
+    .portrait {
+      justify-self: end;
+    }
+  }
+
+  /* Misregistered second plate behind the photo. */
+  .portrait::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--color-accent);
+    transform: translate(var(--space-md), var(--space-md));
+    z-index: -1;
+  }
+
+  .portrait__img,
+  .portrait__slot {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .portrait__slot {
+    background: var(--color-accent-2);
+    color: var(--color-on-accent-2);
+    display: grid;
+    align-content: end;
+    padding: var(--space-md);
+  }
+</style>

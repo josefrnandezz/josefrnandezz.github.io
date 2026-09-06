@@ -1,44 +1,94 @@
 ---
-/* N9 · Edge-aligned minimal: handle hard-left, one CTA hard-right, nothing between. */
+/* N7 · Brutal slab: heavy full-width bar, thick rule, lowercase link row, filled CTA. */
 interface Props {
   handle: string;
   email: string;
+  links?: { label: string; href: string }[];
 }
 
-const { handle, email } = Astro.props;
+const { handle, email, links = [] } = Astro.props;
 ---
 
-<header class="nav-bar">
-  <nav class="nav wrap" aria-label="Primary">
-    <a class="nav__mark mono" href="/">{handle}</a>
-    <a class="nav__cta nowrap" href={`mailto:${email}`}>Email me →</a>
-  </nav>
+<header class="slab">
+  <div class="slab__inner wrap">
+    <a class="slab__mark" href="/">{handle}</a>
+    {
+      links.length > 0 && (
+        <nav class="slab__nav" aria-label="Primary">
+          <ul>
+            {links.map((link) => (
+              <li>
+                <a class="nowrap" href={link.href}>
+                  {link.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      )
+    }
+    <a class="cta-fill slab__cta" href={`mailto:${email}`}>email me</a>
+  </div>
 </header>
 
 <style>
-  .nav-bar {
-    border-bottom: var(--rule-thin) solid var(--color-rule);
+  .slab {
+    border-bottom: var(--rule-thick) solid var(--color-rule);
   }
 
-  .nav {
+  .slab__inner {
     display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+    align-items: center;
     gap: var(--space-lg);
-    padding-block: var(--space-md);
+    padding-block: var(--space-sm);
   }
 
-  .nav__mark {
+  .slab__mark {
+    font-family: var(--font-display);
+    font-weight: 800;
+    font-size: var(--text-md);
+    line-height: 1;
     text-decoration: none;
   }
 
-  .nav__mark:hover {
+  .slab__mark:hover {
     text-decoration-line: underline;
   }
 
-  .nav__cta {
+  .slab__nav {
+    display: none;
+    margin-left: auto;
+  }
+
+  .slab__nav ul {
+    display: flex;
+    gap: var(--space-lg);
+    list-style: none;
+  }
+
+  .slab__nav a {
     font-family: var(--font-display);
-    font-weight: 700;
+    font-weight: 600;
     font-size: var(--text-base);
+    text-decoration: none;
+  }
+
+  .slab__nav a:hover {
+    text-decoration-line: underline;
+  }
+
+  .slab__cta {
+    margin-left: auto;
+    padding: var(--space-xs) var(--space-md);
+  }
+
+  @media (min-width: 48rem) {
+    .slab__nav {
+      display: block;
+    }
+
+    .slab__cta {
+      margin-left: 0;
+    }
   }
 </style>

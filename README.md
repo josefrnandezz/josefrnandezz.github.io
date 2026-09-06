@@ -25,6 +25,12 @@ pnpm verify     # check + test + build, what CI runs
 Everything about the career lives in `src/data/profile.ts`. The markup never
 hardcodes career text. A social link without `url` is not rendered.
 
+## Adding your portrait
+
+Drop a photo at `src/assets/portrait.jpg` (also `.jpeg`, `.png`, `.webp` or
+`.avif`). Portrait orientation, at least 960 px wide. The hero picks it up on
+the next build and replaces the placeholder block; nothing else to configure.
+
 ## Writing a post
 
 Create `src/content/posts/<slug>.md`:

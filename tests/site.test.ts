@@ -64,13 +64,17 @@ describe('home page (no posts)', () => {
     expect(html).not.toContain('<script');
   });
 
-  it('hides the Writing section when there are no posts', () => {
-    expect(text).not.toContain('Writing');
+  it('hides the writing section when there are no posts', () => {
+    expect(html).not.toContain('id="writing"');
+  });
+
+  it('leaves an obvious slot for the portrait until a photo exists', () => {
+    expect(text).toContain('portrait · pending');
   });
 
   it('renders every section in order', () => {
-    const order = ['About', 'Experience', 'Skills', 'Talks & certifications'];
-    const positions = order.map((s) => text.indexOf(s));
+    const order = ['id="about"', 'id="experience"', 'id="skills"', 'id="talks"', 'id="contact"'];
+    const positions = order.map((s) => html.indexOf(s));
     expect(positions.every((p) => p >= 0)).toBe(true);
     expect([...positions].sort((a, b) => a - b)).toEqual(positions);
   });
@@ -86,10 +90,11 @@ describe('home page and post pages (with fixture posts)', () => {
     text = asText(read(out, 'index.html'));
   });
 
-  it('shows the Writing section with the published post', () => {
-    expect(text).toContain('Writing');
+  it('shows the writing section with the published post', () => {
+    const html = read(out, 'index.html');
+    expect(html).toContain('id="writing"');
     expect(text).toContain('Hello, world');
-    expect(read(out, 'index.html')).toContain('href="/posts/hello-world/"');
+    expect(html).toContain('href="/posts/hello-world/"');
   });
 
   it('builds the post page', () => {

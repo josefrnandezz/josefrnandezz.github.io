@@ -1,0 +1,53 @@
+---
+/* Proof column for the About row: a flat second-ink block of plain facts. */
+import type { Fact } from '../data/profile';
+
+interface Props {
+  facts: Fact[];
+}
+
+const { facts } = Astro.props;
+---
+
+<dl class="facts">
+  {
+    facts.map((fact) => (
+      <div class="facts__row">
+        <dt class="mono">{fact.label}</dt>
+        <dd>{fact.value}</dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  .facts {
+    background: var(--color-accent-2);
+    color: var(--color-on-accent-2);
+    padding: var(--space-lg);
+    display: grid;
+    gap: var(--space-md);
+    max-width: 26rem;
+  }
+
+  .facts__row {
+    display: grid;
+    gap: var(--space-2xs);
+  }
+
+  .facts__row + .facts__row {
+    padding-top: var(--space-md);
+    border-top: var(--rule-thin) solid var(--color-on-accent-2);
+  }
+
+  .facts dt {
+    opacity: 0.8;
+  }
+
+  .facts dd {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: var(--text-md);
+    line-height: 1.2;
+  }
+</style>

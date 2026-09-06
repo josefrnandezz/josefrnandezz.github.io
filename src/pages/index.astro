@@ -2,83 +2,76 @@
 import { getCollection } from 'astro:content';
 import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
-import SectionHead from '../components/SectionHead.astro';
+import Hero from '../components/Hero.astro';
+import Split from '../components/Split.astro';
+import Facts from '../components/Facts.astro';
 import Experience from '../components/Experience.astro';
 import Skills from '../components/Skills.astro';
 import Talks from '../components/Talks.astro';
 import Writing from '../components/Writing.astro';
+import Contact from '../components/Contact.astro';
 import Footer from '../components/Footer.astro';
 import { profile } from '../data/profile';
 
 const posts = (await getCollection('posts', ({ data }) => !data.draft)).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
 );
+
+const navLinks = [
+  { label: 'about', href: '#about' },
+  { label: 'experience', href: '#experience' },
+  { label: 'talks', href: '#talks' },
+  ...(posts.length > 0 ? [{ label: 'writing', href: '#writing' }] : []),
+  { label: 'contact', href: '#contact' },
+];
 ---
 
 <Base title={`${profile.name} · ${profile.role}`} description={profile.description}>
-  <Nav handle={profile.handle} email={profile.email} />
+  <Nav handle={profile.handle} email={profile.email} links={navLinks} />
 
   <main id="main">
-    <section class="hero wrap">
-      <h1 class="display-xxl">Jose<br />Fernández<br />Alhama</h1>
-    </section>
+    <Hero name={profile.name} lede={profile.about.lede} email={profile.email} />
 
-    <hr class="rule-thick" />
+    <Split id="about" title="about">
+      <Facts facts={profile.facts} slot="aside" />
+      <div class="prose about">
+        <p>{profile.about.body}</p>
+      </div>
+    </Split>
 
-    <div class="wrap">
-      <section aria-labelledby="about">
-        <SectionHead id="about" title="About" tight />
-        <div class="prose about">
-          <p class="lede">{profile.about.lede}</p>
-          <p>{profile.about.body}</p>
-        </div>
-      </section>
+    <Split
+      id="experience"
+      title="experience"
+      note="Four teams, three companies, one thread: product-minded backend work."
+      reverse
+    >
+      <Experience roles={profile.experience} />
+    </Split>
 
-      <section aria-labelledby="experience">
-        <SectionHead id="experience" title="Experience" />
-        <Experience roles={profile.experience} />
-      </section>
+    <Split id="skills" title="skills">
+      <Skills rows={profile.skills} />
+    </Split>
 
-      <section aria-labelledby="skills">
-        <SectionHead id="skills" title="Skills" />
-        <Skills rows={profile.skills} />
-      </section>
+    <Split
+      id="talks"
+      title="talks & certifications"
+      note="I talk about shipping fast without breaking the codebase."
+      reverse
+    >
+      <Talks talks={profile.talks} certifications={profile.certifications} />
+    </Split>
 
-      <section aria-labelledby="talks">
-        <SectionHead id="talks" title="Talks & certifications" />
-        <Talks talks={profile.talks} certifications={profile.certifications} />
-      </section>
-
-      <Writing posts={posts} />
-    </div>
+    <Writing posts={posts} />
   </main>
 
-  <Footer email={profile.email} location={profile.location} socials={profile.socials} />
+  <Contact email={profile.email} location={profile.location} socials={profile.socials} />
+  <Footer name={profile.name} location={profile.location} />
 </Base>
 
 <style>
-  /* H1 · Marquee: the name fills the fold, bottom-left, no subhead, no CTA. */
-  .hero {
-    min-height: 80dvh;
-    display: grid;
-    align-content: end;
-    padding-block: var(--space-xl) var(--space-2xl);
-  }
-
-  .display-xxl {
-    font-size: var(--text-display);
-    font-weight: 800;
-    line-height: 0.92;
-    letter-spacing: -0.03em;
-  }
-
-  .about .lede {
+  .about {
     font-size: var(--text-md);
-    line-height: 1.4;
-    font-weight: 500;
-  }
-
-  .about > * + * {
-    margin-top: var(--space-lg);
+    line-height: 1.5;
+    max-width: 52ch;
   }
 </style>

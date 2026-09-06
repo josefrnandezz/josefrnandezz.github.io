@@ -1,0 +1,72 @@
+---
+/* Split Studio module: heading half + body half, direction alternates per row. */
+interface Props {
+  id: string;
+  title: string;
+  note?: string;
+  reverse?: boolean;
+}
+
+const { id, title, note, reverse = false } = Astro.props;
+---
+
+<section class:list={['split', 'wrap', { 'split--rev': reverse }]} aria-labelledby={id}>
+  <div class="split__head reveal">
+    <h2 id={id}>{title}</h2>
+    {note && <p class="split__note muted">{note}</p>}
+    <slot name="aside" />
+  </div>
+  <div class="split__body reveal reveal--late">
+    <slot />
+  </div>
+</section>
+
+<style>
+  .split {
+    display: grid;
+    gap: var(--space-lg) var(--space-2xl);
+    padding-block: var(--space-2xl) var(--space-xl);
+  }
+
+  .split__head h2 {
+    font-size: var(--text-2xl);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.03em;
+    text-transform: lowercase;
+  }
+
+  .split__note {
+    margin-top: var(--space-sm);
+    max-width: 28ch;
+  }
+
+  .split__head > :global(*:nth-child(n + 2)) {
+    margin-top: var(--space-lg);
+  }
+
+  .split__body {
+    min-width: 0;
+  }
+
+  @media (min-width: 56rem) {
+    .split {
+      grid-template-columns: 5fr 7fr;
+      padding-block: var(--space-3xl) var(--space-xl);
+    }
+
+    .split--rev {
+      grid-template-columns: 7fr 5fr;
+    }
+
+    .split--rev .split__head {
+      order: 2;
+    }
+
+    .split__head {
+      position: sticky;
+      top: var(--space-xl);
+      align-self: start;
+    }
+  }
+</style>

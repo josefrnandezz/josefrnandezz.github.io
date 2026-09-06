@@ -1,7 +1,7 @@
 ---
 /* Renders nothing until there is at least one post. */
 import type { CollectionEntry } from 'astro:content';
-import SectionHead from './SectionHead.astro';
+import Split from './Split.astro';
 
 interface Props {
   posts: CollectionEntry<'posts'>[];
@@ -15,8 +15,7 @@ const format = (date: Date) =>
 
 {
   posts.length > 0 && (
-    <section aria-labelledby="writing">
-      <SectionHead id="writing" title="Writing" />
+    <Split id="writing" title="writing">
       <ul class="posts">
         {posts.map((post) => (
           <li class="row">
@@ -32,7 +31,7 @@ const format = (date: Date) =>
           </li>
         ))}
       </ul>
-    </section>
+    </Split>
   )
 }
 
