@@ -40,24 +40,23 @@ describe('home page (no posts)', () => {
     expect(text).toContain('Jose Fernández Alhama');
   });
 
-  it('links the mailto contact', () => {
-    expect(html).toContain('href="mailto:joseferr8@gmail.com"');
-  });
-
-  it('links LinkedIn and GitHub', () => {
+  it('links LinkedIn, GitHub and X as the way to get in touch', () => {
     expect(html).toContain('href="https://linkedin.com/in/josefrnandezz"');
     expect(html).toContain('href="https://github.com/josefrnandezz"');
+    expect(html).toContain('href="https://x.com/jfrnandez_"');
   });
 
   it('says where he is based', () => {
     expect(text).toContain('based in Valencia');
-    expect(text).toContain('Valencia, Spain');
+    expect(text).toContain('valencia, spain');
   });
 
-  it('does not publish education or the phone number', () => {
+  it('does not publish education, the phone number or the email address', () => {
     for (const forbidden of ['Education', 'Universidad', 'Groningen', '618 136 295']) {
       expect(text).not.toContain(forbidden);
     }
+    expect(html).not.toContain('mailto:');
+    expect(html).not.toContain('joseferr8@gmail.com');
   });
 
   it('ships no client-side JavaScript', () => {
@@ -68,12 +67,14 @@ describe('home page (no posts)', () => {
     expect(html).not.toContain('id="writing"');
   });
 
-  it('leaves an obvious slot for the portrait until a photo exists', () => {
-    expect(text).toContain('portrait · pending');
+  it('renders the portrait photo instead of the pending slot', () => {
+    expect(html).toContain('alt="Portrait of Jose Fernández Alhama"');
+    expect(html).toContain('class="portrait__img"');
+    expect(text).not.toContain('portrait · pending');
   });
 
   it('renders every section in order', () => {
-    const order = ['id="about"', 'id="experience"', 'id="skills"', 'id="talks"', 'id="contact"'];
+    const order = ['id="about"', 'id="experience"', 'id="talks"', 'id="contact"'];
     const positions = order.map((s) => html.indexOf(s));
     expect(positions.every((p) => p >= 0)).toBe(true);
     expect([...positions].sort((a, b) => a - b)).toEqual(positions);

@@ -17,7 +17,6 @@ export const profile = {
   name: 'Jose Fernández Alhama',
   role: 'Senior Product Engineer',
   location: 'Valencia, Spain',
-  email: 'joseferr8@gmail.com',
   description:
     'Jose Fernández Alhama, Senior Product Engineer at Mercadona Tech, based in Valencia. Product engineering across the stack, payments and checkout.',
 
