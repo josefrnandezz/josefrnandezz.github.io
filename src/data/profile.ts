@@ -1,26 +1,20 @@
 export type Role = {
   title: string;
   company: string;
+  companyUrl: string;
   start: string;
   end: string;
   bullets: string[];
   stack?: string[];
 };
 
-export type SkillRow = { label: string; items: string[] };
-
-export type Talk = { year: string; event: string; title: string };
-
-export type Certification = { name: string; issuer: string };
+export type Talk = { year: string; event: string; title: string; slidesUrl?: string };
 
 /** A social link without `url` is not rendered. */
 export type SocialLink = { label: string; url?: string };
 
-export type Fact = { label: string; value: string };
-
 export const profile = {
   name: 'Jose Fernández Alhama',
-  handle: 'josefrnandezz',
   role: 'Senior Product Engineer',
   location: 'Valencia, Spain',
   email: 'joseferr8@gmail.com',
@@ -29,101 +23,80 @@ export const profile = {
 
   about: {
     lede:
-      'Senior Product Engineer at Mercadona Tech, based in Valencia. Five-plus years building backend systems for e-commerce, SaaS and regulated industries, with a product brain and a habit of asking what actually moves the needle.',
+      'Senior Product Engineer at Mercadona Tech, based in Valencia — originally from Córdoba, Spain. Five-plus years building backend systems for e-commerce, SaaS and regulated industries, with a product brain and a habit of asking what actually moves the needle.',
     body:
       'I care about the intersection of engineering and product: understanding users, making smart tradeoffs and shipping software that matters. I work with fast feedback loops, clean and maintainable code and close collaboration. XP practices like TDD, pair programming and CI/CD are tools I use to keep delivery predictable, not dogma. I’m at my best contributing beyond the ticket: shaping the problem, challenging assumptions and helping the team move faster together.',
   },
 
-  /** Plain facts for the proof column next to About. */
-  facts: [
-    { label: 'now', value: 'Checkout at Mercadona Tech' },
-    { label: 'based in', value: 'Valencia, Spain' },
-    { label: 'stack', value: 'Python, Django, PostgreSQL' },
-    { label: 'next talk', value: 'Awakatech 2026' },
-  ] satisfies Fact[],
-
   socials: [
     { label: 'LinkedIn', url: 'https://linkedin.com/in/josefrnandezz' },
     { label: 'GitHub', url: 'https://github.com/josefrnandezz' },
-    { label: 'X' },
+    { label: 'X', url: 'https://x.com/jfrnandez_' },
   ] satisfies SocialLink[],
 
   experience: [
     {
       title: 'Senior Software Engineer',
       company: 'Mercadona Tech',
+      companyUrl: 'https://www.mercadonatech.com/',
       start: 'May 2025',
       end: 'Present',
       bullets: [
-        'Checkout team: improving conversion for Mercadona’s online store, integrating payment systems and owning the address and authentication flows.',
-        'Part of a staff team driving the adoption of AI tools across the development workflow, with a focus on sustainable, effective practices.',
-        'Mentoring and internal knowledge-sharing aligned with senior engineering goals.',
+        'Working at the checkout team, improving conversion for Mercadona’s online store, integrating payment systems and owning the address and authentication flows.',
+        'Reducing the complexity of a codebase with significant legacy through continuous refactoring, delivering business value along the way.',
       ],
-      stack: ['Python', 'Django', 'PostgreSQL'],
+      stack: ['Python', 'Django', 'PostgreSQL', 'React', 'Kubernetes'],
     },
     {
       title: 'Software Engineer',
       company: 'Qualifyze',
+      companyUrl: 'https://www.qualifyze.com/',
       start: 'Apr 2023',
       end: 'May 2025',
       bullets: [
         'Reduced system complexity by refactoring towards a modular monolith and applying engineering best practices, which led to a dramatic improvement in delivery speed.',
         'Key role in launching a new vertical, a supplier marketplace for the pharma industry, from inception to delivery: product definition, architecture decisions and day-to-day execution.',
-        'Contributed to an audit management platform for the pharmaceutical sector.',
-        'Mentored interns through onboarding and day-to-day technical growth.',
       ],
-      stack: ['TypeScript', 'NestJS', 'React', 'Next.js', 'PostgreSQL'],
+      stack: ['TypeScript', 'NestJS', 'React', 'Next.js', 'Kubernetes', 'PostgreSQL'],
     },
     {
       title: 'Software Engineer',
       company: 'Genially',
+      companyUrl: 'https://genially.com/',
       start: 'Jan 2022',
       end: 'Apr 2023',
       bullets: [
         'Subscriptions and payments team: built and maintained billing flows and integrations with payment providers.',
-        'Core team: managed user-generated content and applied software engineering best practices.',
       ],
-      stack: ['TypeScript', 'Express', 'React'],
+      stack: ['TypeScript', 'Express', 'React', 'Kubernetes'],
     },
     {
       title: 'QA Engineer & Trainee',
       company: 'Genially',
+      companyUrl: 'https://genially.com/',
       start: 'Nov 2020',
       end: 'Jan 2022',
       bullets: [
         'Started as QA Trainee and progressed to QA Tester, contributing to test strategy and quality processes across the product.',
       ],
+      stack: ['React', 'Kubernetes'],
     },
   ] satisfies Role[],
-
-  skills: [
-    { label: 'Languages', items: ['Python', 'TypeScript', 'JavaScript'] },
-    { label: 'Frameworks', items: ['Django', 'NestJS', 'Express', 'Next.js'] },
-    {
-      label: 'Infrastructure',
-      items: ['PostgreSQL', 'MongoDB', 'OpenSearch', 'Kubernetes', 'Docker', 'AWS', 'GCP'],
-    },
-    {
-      label: 'Practices',
-      items: ['TDD', 'DDD', 'Hexagonal Architecture', 'CI/CD', 'Pair/Mob Programming'],
-    },
-    { label: 'AI tooling', items: ['Claude', 'GitHub Copilot', 'Cursor'] },
-    { label: 'Payments', items: ['Redsys', 'Bizum', 'Stripe', '3DS v2'] },
-    { label: 'Spoken', items: ['Spanish (native)', 'English (professional working proficiency)'] },
-  ] satisfies SkillRow[],
 
   talks: [
     {
       year: '2026',
       event: 'Awakatech',
       title: 'Sustainable AI-assisted development: TDD, CI/CD & continuous refactoring',
+      slidesUrl: 'https://view.genially.com/698a17e85467c6d257ca104c',
     },
-    { year: '2024', event: 'Salmorejotech', title: 'Ship, validate, iterate and repeat' },
+    {
+      year: '2024',
+      event: 'Salmorejotech',
+      title: 'Ship, validate, iterate and repeat',
+      slidesUrl: 'https://view.genially.com/6626ba23edf99f0014f57f8d',
+    },
   ] satisfies Talk[],
-
-  certifications: [
-    { name: 'Architecting on AWS', issuer: 'Amazon Web Services' },
-  ] satisfies Certification[],
 };
 
 export type Profile = typeof profile;

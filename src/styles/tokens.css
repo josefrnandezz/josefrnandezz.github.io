@@ -1,27 +1,44 @@
-/* Hallmark · genre: editorial · macrostructure: Split Studio · theme: Riso
- * enrichment: E8 portrait slot (Tier A CSS-art placeholder until photo lands)
+/* Hallmark · genre: editorial · macrostructure: Split Studio · theme: custom (Terracotta/Navy duotone)
+ * enrichment: E8 portrait slot (real photo, src/assets/portrait.png)
  * nav: N7 · footer: Ft2 · hero: H2 · cta: C1 outlined chip + fill slab
- * tone: brutalist, lowercase · anchor hue: 38 (warm) + 262 (cool second ink)
+ * tone: brutalist, lowercase · anchor hue: 40 (warm, functional ink)
  * audience: first contact, general · use case: clear impression + contact
- * previous: Marquee Hero · Brutal · N9 · Ft5 (2026-09-06, same day redesign)
- * pre-emit critique: P5 H4 E4 S5 R3 V5
- * slop test 2026-09-06: 57/57 with two declared, user-directed deviations:
- *   gate 23 (accent fills the contact band and two proof blocks: the brief asked
- *   for vivid inks on flat paper) and N7 inside the editorial genre (the brief
- *   asked for weight, not restraint).
+ * palette redesign 2026-09-06 (user-directed, "best possible palette"):
+ *   moved off the single-hue green (anchor 150) onto a warm/cool duotone —
+ *   the two-plate press conceit the Riso structure always implied, now with
+ *   an actual second ink instead of an off-white stand-in. accent (terracota,
+ *   L42% 0.17 35, ~6.5:1 on paper) keeps every contrast-critical role — link
+ *   hover/active, hero name text, CTA + contact fills, focus ring — at the
+ *   same verified lightness as the palette it replaces. accent-2 (deep navy,
+ *   L28% 0.09 265) is now a real second ink, not a near-white filler: hero
+ *   misregistered shadow, portrait offset plate, blockquote rule, post rule.
+ *   Diversification: differs from the prior Riso build on accent hue (green
+ *   chromatic-other → warm) while paper band and display style hold.
+ * slop test 2026-09-06: 57/58, one declared, user-directed deviation:
+ *   gate 23 (accent fills the contact band: the brief asked for vivid inks
+ *   on flat paper, carried over unchanged from the prior redesign).
+ * bespoke identity pass 2026-09-06 (user-directed, "quiero algo original" ·
+ *   scope: palette + type + micro-detail, structure untouched): tried
+ *   Fraunces Variable (opsz 92 / WONK 1) as display face — user reverted
+ *   it ("no me gusta la tipografía, vuelve a la de antes"), so display
+ *   is back to Bricolage Grotesque Variable. Kept the two restrained
+ *   bespoke details that survived: accent-coloured list markers
+ *   (Experience bullets) and a low-opacity CSS feTurbulence grain on the
+ *   contact band. Favicon keeps the terracotta monogram fill, reverted
+ *   to the Bricolage Grotesque font reference.
  */
 :root {
-  /* Flat cream paper, blue-black ink, two riso inks. No pure black or white. */
-  --color-paper: oklch(96% 0.025 92);
-  --color-paper-2: oklch(91% 0.03 92);
-  --color-ink: oklch(22% 0.035 265);
-  --color-rule: oklch(22% 0.035 265);
-  --color-muted: oklch(48% 0.03 265);
-  --color-accent: oklch(66% 0.22 38);
-  --color-on-accent: oklch(22% 0.035 265);
-  --color-accent-2: oklch(45% 0.19 262);
-  --color-on-accent-2: oklch(96% 0.025 92);
-  --color-focus: oklch(45% 0.19 262);
+  /* Warm cream paper, warm near-black ink, terracotta + navy duotone. No pure black or white. */
+  --color-paper: oklch(96% 0.014 75);
+  --color-paper-2: oklch(91% 0.018 72);
+  --color-ink: oklch(22% 0.03 40);
+  --color-rule: oklch(22% 0.03 40);
+  --color-muted: oklch(46% 0.02 45);
+  --color-accent: oklch(42% 0.17 35);
+  --color-on-accent: oklch(96% 0.014 75);
+  --color-accent-2: oklch(28% 0.09 265);
+  --color-on-accent-2: oklch(96% 0.014 75);
+  --color-focus: oklch(42% 0.17 35);
 
   --font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
@@ -63,15 +80,15 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-paper: oklch(18% 0.03 265);
-    --color-paper-2: oklch(23% 0.03 265);
-    --color-ink: oklch(95% 0.02 92);
-    --color-rule: oklch(95% 0.02 92);
-    --color-muted: oklch(72% 0.02 92);
-    --color-accent: oklch(70% 0.2 40);
-    --color-on-accent: oklch(18% 0.03 265);
-    --color-accent-2: oklch(62% 0.17 262);
-    --color-on-accent-2: oklch(18% 0.03 265);
-    --color-focus: oklch(70% 0.2 40);
+    --color-paper: oklch(18% 0.03 40);
+    --color-paper-2: oklch(23% 0.03 40);
+    --color-ink: oklch(95% 0.02 75);
+    --color-rule: oklch(95% 0.02 75);
+    --color-muted: oklch(72% 0.02 75);
+    --color-accent: oklch(68% 0.14 35);
+    --color-on-accent: oklch(18% 0.03 40);
+    --color-accent-2: oklch(62% 0.1 265);
+    --color-on-accent-2: oklch(16% 0.02 40);
+    --color-focus: oklch(68% 0.14 35);
   }
 }

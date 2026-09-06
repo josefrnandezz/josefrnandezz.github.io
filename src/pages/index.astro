@@ -4,9 +4,7 @@ import Base from '../layouts/Base.astro';
 import Nav from '../components/Nav.astro';
 import Hero from '../components/Hero.astro';
 import Split from '../components/Split.astro';
-import Facts from '../components/Facts.astro';
 import Experience from '../components/Experience.astro';
-import Skills from '../components/Skills.astro';
 import Talks from '../components/Talks.astro';
 import Writing from '../components/Writing.astro';
 import Contact from '../components/Contact.astro';
@@ -22,50 +20,39 @@ const navLinks = [
   { label: 'experience', href: '#experience' },
   { label: 'talks', href: '#talks' },
   ...(posts.length > 0 ? [{ label: 'writing', href: '#writing' }] : []),
-  { label: 'contact', href: '#contact' },
 ];
 ---
 
 <Base title={`${profile.name} · ${profile.role}`} description={profile.description}>
-  <Nav handle={profile.handle} email={profile.email} links={navLinks} />
+  <Nav links={navLinks} />
 
   <main id="main">
-    <Hero name={profile.name} lede={profile.about.lede} email={profile.email} />
+    <Hero name={profile.name} lede={profile.about.lede} />
 
     <Split id="about" title="about">
-      <Facts facts={profile.facts} slot="aside" />
       <div class="prose about">
         <p>{profile.about.body}</p>
       </div>
     </Split>
 
-    <Split
-      id="experience"
-      title="experience"
-      note="Four teams, three companies, one thread: product-minded backend work."
-      reverse
-    >
+    <Split id="experience" title="experience" reverse>
       <Experience roles={profile.experience} />
-    </Split>
-
-    <Split id="skills" title="skills">
-      <Skills rows={profile.skills} />
     </Split>
 
     <Split
       id="talks"
-      title="talks & certifications"
+      title="talks"
       note="I talk about shipping fast without breaking the codebase."
       reverse
     >
-      <Talks talks={profile.talks} certifications={profile.certifications} />
+      <Talks talks={profile.talks} />
     </Split>
 
     <Writing posts={posts} />
   </main>
 
-  <Contact email={profile.email} location={profile.location} socials={profile.socials} />
-  <Footer name={profile.name} location={profile.location} />
+  <Contact location={profile.location} socials={profile.socials} />
+  <Footer name={profile.name} />
 </Base>
 
 <style>

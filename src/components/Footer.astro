@@ -2,15 +2,13 @@
 /* Ft2 · Inline single line: name left, colophon right, one rule above. */
 interface Props {
   name: string;
-  location: string;
 }
 
-const { name, location } = Astro.props;
+const { name } = Astro.props;
 ---
 
 <footer class="foot wrap">
   <p class="nowrap">{name.toLowerCase()}</p>
-  <p class="nowrap muted">{location.toLowerCase()} · astro, no javascript</p>
 </footer>
 
 <style>

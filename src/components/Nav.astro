@@ -1,17 +1,15 @@
 ---
-/* N7 · Brutal slab: heavy full-width bar, thick rule, lowercase link row, filled CTA. */
+/* N7 · Brutal slab: heavy full-width bar, thick rule, lowercase link row, filled CTA.
+ * No wordmark: the hero heading right below already carries the name. */
 interface Props {
-  handle: string;
-  email: string;
   links?: { label: string; href: string }[];
 }
 
-const { handle, email, links = [] } = Astro.props;
+const { links = [] } = Astro.props;
 ---
 
 <header class="slab">
   <div class="slab__inner wrap">
-    <a class="slab__mark" href="/">{handle}</a>
     {
       links.length > 0 && (
         <nav class="slab__nav" aria-label="Primary">
@@ -27,7 +25,7 @@ const { handle, email, links = [] } = Astro.props;
         </nav>
       )
     }
-    <a class="cta-fill slab__cta" href={`mailto:${email}`}>email me</a>
+    <a class="cta-fill slab__cta" href="#contact">contact</a>
   </div>
 </header>
 
@@ -41,18 +39,6 @@ const { handle, email, links = [] } = Astro.props;
     align-items: center;
     gap: var(--space-lg);
     padding-block: var(--space-sm);
-  }
-
-  .slab__mark {
-    font-family: var(--font-display);
-    font-weight: 800;
-    font-size: var(--text-md);
-    line-height: 1;
-    text-decoration: none;
-  }
-
-  .slab__mark:hover {
-    text-decoration-line: underline;
   }
 
   .slab__nav {
@@ -85,10 +71,6 @@ const { handle, email, links = [] } = Astro.props;
   @media (min-width: 48rem) {
     .slab__nav {
       display: block;
-    }
-
-    .slab__cta {
-      margin-left: 0;
     }
   }
 </style>

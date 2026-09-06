@@ -1,11 +1,25 @@
 ---
 import type { Role } from '../data/profile';
+import mercadonaTech from '../assets/logos/mercadona-tech.png';
+import qualifyze from '../assets/logos/qualifyze.png';
+import genially from '../assets/logos/genially.svg';
 
 interface Props {
   roles: Role[];
 }
 
 const { roles } = Astro.props;
+
+const logos: Record<string, ImageMetadata | string> = {
+  'Mercadona Tech': mercadonaTech,
+  Qualifyze: qualifyze,
+  Genially: genially,
+};
+
+function logoSrc(company: string): string {
+  const logo = logos[company];
+  return typeof logo === 'string' ? logo : logo.src;
+}
 ---
 
 <ol class="roles">
@@ -16,9 +30,19 @@ const { roles } = Astro.props;
           <time>{role.start}</time> – <time>{role.end}</time>
         </p>
         <div class="row__body">
-          <h3 class="role">
-            {role.title} <span class="company">· {role.company}</span>
-          </h3>
+          <h3 class="role">{role.title}</h3>
+          <p class="role-company">
+            <a
+              class="company-badge"
+              href={role.companyUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              aria-label={`${role.company} website`}
+            >
+              <img src={logoSrc(role.company)} alt="" width="20" height="20" loading="lazy" />
+            </a>
+            <span class="company">{role.company}</span>
+          </p>
           <ul class="bullets">
             {role.bullets.map((bullet) => (
               <li>{bullet}</li>
@@ -42,9 +66,49 @@ const { roles } = Astro.props;
     line-height: 1.2;
   }
 
+  /* Title on its own line; the mark + company name form a quiet second line under it. */
+  .role-company {
+    display: flex;
+    align-items: center;
+    gap: var(--space-xs);
+    margin-top: var(--space-2xs);
+  }
+
   .company {
     font-weight: 500;
     color: var(--color-muted);
+  }
+
+  /* Real company mark, unframed: the logo stands on its own, no ring around it. */
+  .company-badge {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 1.25rem;
+    height: 1.25rem;
+    flex: none;
+    text-decoration: none;
+    transition: transform var(--dur-micro) var(--ease-out);
+  }
+
+  .company-badge img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  .company-badge:hover {
+    transform: translateY(-2px);
+  }
+
+  .company-badge:active {
+    transform: translateY(0);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .company-badge {
+      transition: none;
+    }
   }
 
   .bullets {
@@ -53,6 +117,10 @@ const { roles } = Astro.props;
     margin-top: var(--space-sm);
     display: grid;
     gap: var(--space-2xs);
+  }
+
+  .bullets li::marker {
+    color: var(--color-accent);
   }
 
   .stack {

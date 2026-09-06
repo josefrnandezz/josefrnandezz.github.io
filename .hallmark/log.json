@@ -2,6 +2,28 @@
   {
     "date": "2026-09-06",
     "macrostructure": "Split Studio",
+    "theme": "custom",
+    "theme_axes": "light / display-heavy / warm",
+    "vibe": "bespoke identity pass: tried Fraunces display face, user reverted to Bricolage Grotesque; kept accent-coloured bullet markers + CSS grain on contact band; new portrait photo; Mercadona bullets rewritten, React+Kubernetes added to every role's stack; nav wordmark removed (redundant with hero name directly below it), nav CTA now scrolls to #contact instead of mailto; Contact section rebuilt quiet (no full-bleed fill, single rule above like other sections) with the X profile as the featured link instead of the email",
+    "enrichment": "E8 portrait slot (real photo, src/assets/portrait.png)",
+    "nav": "N7 (no wordmark)",
+    "footer": "Ft2",
+    "brief": "\"quiero algo original\" + follow-up content/type/nav/contact corrections: bespoke micro-detail pass on top of the terracotta/navy palette, structure otherwise untouched"
+  },
+  {
+    "date": "2026-09-06",
+    "macrostructure": "Split Studio",
+    "theme": "custom",
+    "theme_axes": "light / display-heavy / warm",
+    "vibe": "warm/cool duotone, terracotta + navy, cream paper",
+    "enrichment": "E8 portrait slot (real photo, src/assets/portrait.png)",
+    "nav": "N7",
+    "footer": "Ft2",
+    "brief": "Palette-only redesign: replace single green-hue Riso accent with a terracotta + navy duotone for a more sophisticated portfolio palette; verified 320/375/414/768px responsiveness"
+  },
+  {
+    "date": "2026-09-06",
+    "macrostructure": "Split Studio",
     "theme": "Riso",
     "enrichment": "E8 portrait slot (Tier A CSS-art placeholder)",
     "nav": "N7",

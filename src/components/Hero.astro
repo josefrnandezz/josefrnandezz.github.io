@@ -7,10 +7,9 @@ import { Image } from 'astro:assets';
 interface Props {
   name: string;
   lede: string;
-  email: string;
 }
 
-const { name, lede, email } = Astro.props;
+const { name, lede } = Astro.props;
 
 const portraits = import.meta.glob<{ default: ImageMetadata }>(
   '../assets/portrait.{jpg,jpeg,png,webp,avif}',
@@ -27,7 +26,7 @@ const [first, ...rest] = name.split(' ');
       <span class="hero__rest">{rest.join(' ')}</span>
     </h1>
     <p class="hero__lede">{lede}</p>
-    <a class="cta-outline" href={`mailto:${email}`}>say hello →</a>
+    <a class="cta-outline" href="#contact">say hello →</a>
   </div>
 
   <figure class="portrait reveal--late">
@@ -39,6 +38,10 @@ const [first, ...rest] = name.split(' ');
           alt={`Portrait of ${name}`}
           widths={[480, 720, 960]}
           sizes="(min-width: 56rem) 26rem, 100vw"
+          format="webp"
+          quality="high"
+          loading="eager"
+          fetchpriority="high"
         />
       ) : (
         <div
@@ -84,12 +87,13 @@ const [first, ...rest] = name.split(' ');
     letter-spacing: -0.035em;
     text-transform: lowercase;
     display: grid;
+    gap: 0.12em;
   }
 
   /* Riso off-register: the second ink sits a hair behind the first. */
   .hero__first {
-    color: var(--color-accent-2);
-    text-shadow: 0.05em 0.05em 0 var(--color-accent);
+    color: var(--color-accent);
+    text-shadow: 0.05em 0.05em 0 var(--color-accent-2);
   }
 
   .hero__lede {
@@ -99,12 +103,19 @@ const [first, ...rest] = name.split(' ');
   }
 
   .portrait {
-    position: relative;
-    width: 100%;
-    max-width: 26rem;
-    aspect-ratio: 4 / 5;
-    isolation: isolate;
-    justify-self: start;
+    display: none;
+  }
+
+  @media (min-width: 48rem) {
+    .portrait {
+      position: relative;
+      display: block;
+      width: 100%;
+      max-width: 26rem;
+      aspect-ratio: 4 / 5;
+      isolation: isolate;
+      justify-self: start;
+    }
   }
 
   @media (min-width: 56rem) {

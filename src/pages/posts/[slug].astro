@@ -22,7 +22,7 @@ const date = post.data.date.toLocaleDateString('en-GB', {
 ---
 
 <Base title={`${post.data.title} · ${profile.name}`} description={post.data.description}>
-  <Nav handle={profile.handle} email={profile.email} links={[{ label: 'home', href: '/' }]} />
+  <Nav links={[{ label: 'home', href: '/' }]} />
 
   <main id="main" class="wrap post">
     <header class="post__head">
@@ -42,8 +42,8 @@ const date = post.data.date.toLocaleDateString('en-GB', {
     <p class="post__back"><a href="/">← Back home</a></p>
   </main>
 
-  <Contact email={profile.email} location={profile.location} socials={profile.socials} />
-  <Footer name={profile.name} location={profile.location} />
+  <Contact location={profile.location} socials={profile.socials} />
+  <Footer name={profile.name} />
 </Base>
 
 <style>
