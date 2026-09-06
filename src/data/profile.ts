@@ -19,11 +19,11 @@ export const profile = {
   location: 'Valencia, Spain',
   email: 'joseferr8@gmail.com',
   description:
-    'Jose Fernández Alhama, Senior Product Engineer at Mercadona Tech, based in Valencia. Backend systems, payments and product-minded engineering.',
+    'Jose Fernández Alhama, Senior Product Engineer at Mercadona Tech, based in Valencia. Product engineering across the stack, payments and checkout.',
 
   about: {
     lede:
-      'Senior Product Engineer at Mercadona Tech, based in Valencia — originally from Córdoba, Spain. Five-plus years building backend systems for e-commerce, SaaS and regulated industries, with a product brain and a habit of asking what actually moves the needle.',
+      'Senior Product Engineer at Mercadona Tech, based in Valencia — originally from Córdoba, Spain. Five-plus years building software across the stack for e-commerce, SaaS and regulated industries, with a product brain and a habit of asking what actually moves the needle.',
     body:
       'I care about the intersection of engineering and product: understanding users, making smart tradeoffs and shipping software that matters. I work with fast feedback loops, clean and maintainable code and close collaboration. XP practices like TDD, pair programming and CI/CD are tools I use to keep delivery predictable, not dogma. I’m at my best contributing beyond the ticket: shaping the problem, challenging assumptions and helping the team move faster together.',
   },
@@ -43,7 +43,7 @@ export const profile = {
       end: 'Present',
       bullets: [
         'Working at the checkout team, improving conversion for Mercadona’s online store, integrating payment systems and owning the address and authentication flows.',
-        'Reducing the complexity of a codebase with significant legacy through continuous refactoring, delivering business value along the way.',
+        'Untangling heavy legacy through continuous refactoring, so the codebase gets simpler without delivery ever pausing for a rewrite.',
       ],
       stack: ['Python', 'Django', 'PostgreSQL', 'React', 'Kubernetes'],
     },
@@ -56,6 +56,7 @@ export const profile = {
       bullets: [
         'Reduced system complexity by refactoring towards a modular monolith and applying engineering best practices, which led to a dramatic improvement in delivery speed.',
         'Key role in launching a new vertical, a supplier marketplace for the pharma industry, from inception to delivery: product definition, architecture decisions and day-to-day execution.',
+        'Mentored interns joining the team, pairing with them on day-to-day delivery.',
       ],
       stack: ['TypeScript', 'NestJS', 'React', 'Next.js', 'Kubernetes', 'PostgreSQL'],
     },
@@ -67,6 +68,7 @@ export const profile = {
       end: 'Apr 2023',
       bullets: [
         'Subscriptions and payments team: built and maintained billing flows and integrations with payment providers.',
+        'Contributed to the product’s move from a single-account model to multi-user workspaces, opening it up to teams.',
       ],
       stack: ['TypeScript', 'Express', 'React', 'Kubernetes'],
     },
@@ -78,8 +80,9 @@ export const profile = {
       end: 'Jan 2022',
       bullets: [
         'Started as QA Trainee and progressed to QA Tester, contributing to test strategy and quality processes across the product.',
+        'Built an end-to-end test suite with Cypress covering the product’s different areas.',
       ],
-      stack: ['React', 'Kubernetes'],
+      stack: ['Cypress', 'React', 'Kubernetes'],
     },
   ] satisfies Role[],
 
