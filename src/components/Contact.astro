@@ -1,5 +1,6 @@
 ---
-/* Contact band: full-bleed accent block. The one place colour fills the view.
+/* Contact band: the one place colour fills the view. It enters as an inset
+ * card and opens to full bleed as you scroll into it.
  * linkedin / github / x are the featured links, same weight, in that order. */
 import type { SocialLink } from '../data/profile';
 
@@ -21,6 +22,9 @@ const links = socials.filter((s): s is Required<SocialLink> => Boolean(s.url));
           <li>
             <a href={link.url} rel="me">
               {link.label.toLowerCase()}
+              <span class="arrow arrow--out" aria-hidden="true">
+                ↗
+              </span>
             </a>
           </li>
         ))
@@ -36,27 +40,19 @@ const links = socials.filter((s): s is Required<SocialLink> => Boolean(s.url));
   .contact {
     position: relative;
     margin-top: clamp(var(--space-xl), 10vw, var(--space-3xl));
-    background: var(--color-accent);
-    color: var(--color-on-accent);
-    isolation: isolate;
+    background: var(--color-band);
+    color: var(--color-on-band);
   }
 
-  /* Bespoke grain: a pure-CSS turbulence texture, not a flat colour fill. */
-  .contact::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    z-index: -1;
-    opacity: 0.1;
-    mix-blend-mode: multiply;
-    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  .contact ::selection {
+    background: var(--color-accent);
+    color: var(--color-on-accent);
   }
 
   .contact__inner {
     display: grid;
-    gap: clamp(var(--space-md), 3.5vw, var(--space-lg));
-    padding-block: clamp(var(--space-xl), 8vw, var(--space-3xl))
-      clamp(var(--space-lg), 6vw, var(--space-2xl));
+    gap: clamp(var(--space-md), 3.5vw, var(--space-xl));
+    padding-block: clamp(var(--space-2xl), 12vw, 9rem) clamp(var(--space-lg), 5vw, var(--space-xl));
   }
 
   /* One line, always. The size is driven by vw so the ratio between the text
@@ -65,7 +61,7 @@ const links = socials.filter((s): s is Required<SocialLink> => Boolean(s.url));
     font-size: var(--text-statement);
     font-weight: 800;
     line-height: 1.05;
-    letter-spacing: -0.035em;
+    letter-spacing: -0.04em;
     text-transform: lowercase;
     white-space: nowrap;
     overflow-wrap: normal;
@@ -75,46 +71,82 @@ const links = socials.filter((s): s is Required<SocialLink> => Boolean(s.url));
     list-style: none;
     display: flex;
     flex-wrap: wrap;
-    gap: var(--space-sm) clamp(var(--space-md), 4vw, var(--space-xl));
+    gap: var(--space-sm) clamp(var(--space-md), 4vw, var(--space-2xl));
   }
 
-  /* Fluid alongside the title: at a fixed --text-xl these out-shouted the
-     heading on narrow screens and inverted the hierarchy. */
+  /* Fluid alongside the title so the links never out-shout the heading. */
   .contact__feature a {
     font-family: var(--font-display);
     font-size: clamp(var(--text-base), 4.7vw, var(--text-xl));
-    font-weight: 700;
+    font-weight: 600;
     line-height: 1;
     letter-spacing: -0.02em;
-    text-decoration-color: var(--color-on-accent);
+    text-decoration-color: color-mix(in oklch, var(--color-on-band) 40%, transparent);
     text-decoration-thickness: 0.06em;
-    text-underline-offset: 0.12em;
+    text-underline-offset: 0.16em;
   }
 
   .contact__feature a:hover,
   .contact__feature a:active {
-    color: var(--color-on-accent);
-    text-decoration-color: var(--color-accent-2);
+    color: var(--color-on-band);
+    text-decoration-color: var(--color-accent);
+  }
+
+  .contact__feature .arrow {
+    color: var(--color-accent);
   }
 
   .contact__meta {
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-end;
-    margin-top: clamp(var(--space-2xs), 2.5vw, var(--space-lg));
+    margin-top: clamp(var(--space-lg), 8vw, var(--space-3xl));
     padding-top: var(--space-sm);
-    border-top: var(--rule-thin) solid var(--color-on-accent);
-  }
-
-  .contact a {
-    text-decoration-color: var(--color-on-accent);
-  }
-
-  .contact a:hover {
-    text-decoration-color: var(--color-accent-2);
+    border-top: var(--rule-thin) solid color-mix(in oklch, var(--color-on-band) 25%, transparent);
   }
 
   .contact :focus-visible {
-    outline-color: var(--color-on-accent);
+    outline-color: var(--color-on-band);
+  }
+
+  @keyframes open {
+    from {
+      clip-path: inset(18% var(--page-gutter) 0 var(--page-gutter) round 1.5rem 1.5rem 0 0);
+    }
+
+    to {
+      clip-path: inset(0 0 0 0 round 0);
+    }
+  }
+
+  @keyframes lift {
+    from {
+      opacity: 0;
+      translate: 0 3rem;
+    }
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: view()) {
+      .contact {
+        animation: open linear both;
+        animation-timeline: var(--tl-view);
+        animation-range: entry 0% entry 85%;
+      }
+
+      .contact__title,
+      .contact__feature {
+        animation: lift linear both;
+        animation-timeline: var(--tl-view);
+      }
+
+      .contact__title {
+        animation-range: entry 20% entry 120%;
+      }
+
+      .contact__feature {
+        animation-range: entry 60% entry 160%;
+      }
+    }
   }
 </style>

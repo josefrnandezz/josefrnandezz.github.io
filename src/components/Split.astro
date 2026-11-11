@@ -1,5 +1,5 @@
 ---
-/* Split Studio module: heading half + body half, direction alternates per row. */
+/* Section module: a sticky heading column and a body column. */
 interface Props {
   id: string;
   title: string;
@@ -16,7 +16,7 @@ const { id, title, note, reverse = false } = Astro.props;
     {note && <p class="split__note muted">{note}</p>}
     <slot name="aside" />
   </div>
-  <div class="split__body reveal reveal--late">
+  <div class="split__body">
     <slot />
   </div>
 </section>
@@ -29,8 +29,8 @@ const { id, title, note, reverse = false } = Astro.props;
   }
 
   .split__head h2 {
-    font-size: var(--text-2xl);
-    font-weight: 800;
+    font-size: var(--text-xl);
+    font-weight: 700;
     line-height: 1;
     letter-spacing: -0.03em;
     text-transform: lowercase;
@@ -51,12 +51,12 @@ const { id, title, note, reverse = false } = Astro.props;
 
   @media (min-width: 56rem) {
     .split {
-      grid-template-columns: 5fr 7fr;
-      padding-block: var(--space-3xl) var(--space-xl);
+      grid-template-columns: minmax(0, 1fr) minmax(0, 2.4fr);
+      padding-block: var(--space-3xl) var(--space-2xl);
     }
 
     .split--rev {
-      grid-template-columns: 7fr 5fr;
+      grid-template-columns: minmax(0, 2.4fr) minmax(0, 1fr);
     }
 
     .split--rev .split__head {
@@ -65,7 +65,7 @@ const { id, title, note, reverse = false } = Astro.props;
 
     .split__head {
       position: sticky;
-      top: var(--space-xl);
+      top: calc(var(--nav-h) + var(--space-xl));
       align-self: start;
     }
   }

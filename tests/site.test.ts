@@ -67,10 +67,12 @@ describe('home page (no posts)', () => {
     expect(html).not.toContain('id="writing"');
   });
 
-  it('renders the portrait photo instead of the pending slot', () => {
-    expect(html).toContain('alt="Portrait of Jose Fernández Alhama"');
-    expect(html).toContain('class="portrait__img"');
-    expect(text).not.toContain('portrait · pending');
+  it('opens with the name as the only heading and no portrait', () => {
+    expect(html.match(/<h1[\s>]/g)).toHaveLength(1);
+    expect(asText(html.slice(html.indexOf('<h1'), html.indexOf('</h1>')))).toContain(
+      'Jose Fernández Alhama',
+    );
+    expect(html.toLowerCase()).not.toContain('portrait');
   });
 
   it('renders every section in order', () => {

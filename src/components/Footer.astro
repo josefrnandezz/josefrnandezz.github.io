@@ -1,5 +1,5 @@
 ---
-/* Ft2 · Inline single line: name left, colophon right, one rule above. */
+/* Single quiet line under the contact band. */
 interface Props {
   name: string;
 }
@@ -19,8 +19,8 @@ const { name } = Astro.props;
     align-items: baseline;
     gap: var(--space-xs) var(--space-xl);
     padding-block: var(--space-md) var(--space-lg);
-    border-top: var(--rule-thin) solid var(--color-rule);
     font-family: var(--font-mono);
     font-size: var(--text-sm);
+    color: var(--color-muted);
   }
 </style>

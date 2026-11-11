@@ -25,11 +25,13 @@ pnpm verify     # check + test + build, what CI runs
 Everything about the career lives in `src/data/profile.ts`. The markup never
 hardcodes career text. A social link without `url` is not rendered.
 
-## Adding your portrait
+## Motion
 
-Drop a photo at `src/assets/portrait.jpg` (also `.jpeg`, `.png`, `.webp` or
-`.avif`). Portrait orientation, at least 960 px wide. The hero picks it up on
-the next build and replaces the placeholder block; nothing else to configure.
+All animation is CSS: a load sequence in the hero plus scroll-driven effects
+(`animation-timeline`). Browsers without scroll timelines, and anyone with
+"reduce motion" on, get the finished page with no animation. Scroll timelines
+are referenced through the `--tl-*` custom properties in
+`src/styles/tokens.css`; keep it that way, the comment there explains why.
 
 ## Writing a post
 

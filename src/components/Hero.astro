@@ -1,9 +1,10 @@
 ---
-/* H2 · Split diptych: name + lede + chip on the left, portrait on the right.
- * E8 portrait: drop a file at src/assets/portrait.{jpg,jpeg,png,webp,avif}
- * and it replaces the CSS-art slot automatically. */
-import { Image } from 'astro:assets';
-
+/* Type-only hero: the name fills the column, one word per line, with the
+ * lede and CTA on a single row under it. No image.
+ *
+ * Motion: on load each word rises out of its own line mask, then the lede
+ * and CTA follow. On scroll the lines slide apart in opposite directions as
+ * the hero leaves the viewport. */
 interface Props {
   name: string;
   lede: string;
@@ -11,147 +12,148 @@ interface Props {
 
 const { name, lede } = Astro.props;
 
-const portraits = import.meta.glob<{ default: ImageMetadata }>(
-  '../assets/portrait.{jpg,jpeg,png,webp,avif}',
-  { eager: true },
-);
-const portrait = Object.values(portraits)[0]?.default;
-/* One word per line: .hero__name is a grid, so each span takes its own row.
- * Three lines at every width, never two. */
-const [first, ...rest] = name.split(' ');
+/* One word per line, at every width. */
+const words = name.split(' ');
 ---
 
 <section class="hero wrap">
-  <div class="hero__copy">
-    <h1 class="hero__name">
-      <span class="hero__first">{first}</span>
-      {/* Trailing space keeps the words separate words in the accessible name;
-          it collapses visually because each span is its own grid row. */}
-      {rest.map((word) => <span class="hero__rest">{word} </span>)}
-    </h1>
-    <p class="hero__lede">{lede}</p>
-    <a class="cta-outline" href="#contact">say hello →</a>
-  </div>
-
-  <figure class="portrait reveal--late">
+  <h1 class="hero__name">
     {
-      portrait ? (
-        <Image
-          class="portrait__img"
-          src={portrait}
-          alt={`Portrait of ${name}`}
-          widths={[480, 720, 960]}
-          sizes="(min-width: 56rem) 26rem, 100vw"
-          format="webp"
-          quality="high"
-          loading="eager"
-          fetchpriority="high"
-        />
-      ) : (
-        <div
-          class="portrait__slot"
-          role="img"
-          aria-label={`Portrait of ${name}, photo pending`}
-        >
-          <span class="mono">portrait · pending</span>
-        </div>
-      )
+      words.map((word, i) => (
+        <span class="hero__line">
+          {/* Trailing space keeps the words separate in the accessible name;
+              it collapses visually at the end of each line. */}
+          <span class:list={['hero__word', { 'hero__word--accent': i === 0 }]} style={`--i:${i}`}>
+            {word}{' '}
+          </span>
+        </span>
+      ))
     }
-  </figure>
+  </h1>
+
+  <div class="hero__foot">
+    <p class="hero__lede">{lede}</p>
+    <a class="cta-fill hero__cta" href="#contact">
+      say hello <span class="arrow" aria-hidden="true">→</span>
+    </a>
+  </div>
 </section>
 
 <style>
   .hero {
     display: grid;
-    gap: var(--space-xl);
-    padding-block: var(--space-xl) var(--space-2xl);
-    align-items: end;
+    align-content: end;
+    gap: clamp(var(--space-lg), 4vw, var(--space-xl));
+    min-height: 78svh;
+    padding-block: var(--space-xl);
+    view-timeline: --hero block;
   }
 
-  @media (min-width: 56rem) {
+  @media (min-width: 48rem) {
     .hero {
-      grid-template-columns: 7fr 5fr;
-      gap: var(--space-2xl);
-      padding-block: var(--space-2xl) var(--space-3xl);
-      min-height: 70dvh;
-      align-content: end;
+      min-height: calc(100svh - var(--nav-h));
     }
   }
 
-  .hero__copy {
+  /* Sized so the longest word spans the column: the divisor is that word's
+     width in em at this weight and tracking, with a little air. Capped by
+     the viewport height so three lines always fit above the fold. */
+  .hero__name {
+    font-size: min(calc((100vw - 2 * var(--page-gutter)) / 4.8), 19svh, 15.5rem);
+    font-weight: 800;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    text-transform: lowercase;
+  }
+
+  /* Each line is a mask the word rises through. The padding gives accents
+     and descenders room inside the clip; the negative margin takes it back. */
+  .hero__line {
+    display: block;
+    overflow: clip;
+    padding-block: 0.12em;
+    margin-block: -0.22em;
+    /* Optical alignment: the heavy lowercase glyphs carry a side bearing. */
+    margin-inline-start: -0.04em;
+  }
+
+  .hero__line:first-child {
+    margin-top: -0.12em;
+  }
+
+  .hero__line:last-child {
+    margin-bottom: -0.12em;
+  }
+
+  .hero__word {
+    display: inline-block;
+  }
+
+  .hero__word--accent {
+    color: var(--color-accent);
+  }
+
+  .hero__foot {
     display: grid;
     gap: var(--space-lg);
     justify-items: start;
+    padding-top: var(--space-lg);
+    border-top: var(--rule-thin) solid var(--color-line);
   }
 
-  .hero__name {
-    font-size: var(--text-display);
-    font-weight: 800;
-    line-height: 0.95;
-    letter-spacing: -0.035em;
-    text-transform: lowercase;
-    display: grid;
-    gap: 0.12em;
-  }
-
-  /* Riso off-register: the second ink sits a hair behind the first. */
-  .hero__first {
-    color: var(--color-accent);
-    text-shadow: 0.05em 0.05em 0 var(--color-accent-2);
+  @media (min-width: 48rem) {
+    .hero__foot {
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: end;
+      gap: var(--space-2xl);
+    }
   }
 
   .hero__lede {
     font-size: var(--text-md);
     line-height: 1.4;
-    max-width: 38ch;
+    max-width: 36ch;
+    text-wrap: pretty;
   }
 
-  .portrait {
-    display: none;
-  }
-
-  @media (min-width: 48rem) {
-    .portrait {
-      position: relative;
-      display: block;
-      width: 100%;
-      max-width: 26rem;
-      aspect-ratio: 4 / 5;
-      isolation: isolate;
-      justify-self: start;
+  @keyframes part-left {
+    to {
+      translate: -9vw 0;
+      opacity: 0.15;
     }
   }
 
-  @media (min-width: 56rem) {
-    .portrait {
-      justify-self: end;
+  @keyframes part-right {
+    to {
+      translate: 9vw 0;
+      opacity: 0.15;
     }
   }
 
-  /* Misregistered second plate behind the photo. */
-  .portrait::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: var(--color-accent);
-    transform: translate(var(--space-md), var(--space-md));
-    z-index: -1;
-  }
+  @media (prefers-reduced-motion: no-preference) {
+    .hero__word {
+      animation: rise var(--dur-enter) var(--ease-out) both;
+      animation-delay: calc(var(--i) * 120ms + 80ms);
+    }
 
-  .portrait__img,
-  .portrait__slot {
-    position: absolute;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+    .hero__lede {
+      animation: fade-up 900ms var(--ease-out) 560ms both;
+    }
 
-  .portrait__slot {
-    background: var(--color-accent-2);
-    color: var(--color-on-accent-2);
-    display: grid;
-    align-content: end;
-    padding: var(--space-md);
+    .hero__cta {
+      animation: fade-up 900ms var(--ease-out) 680ms both;
+    }
+
+    @supports (animation-timeline: view()) {
+      .hero__line {
+        animation: part-left linear both;
+        animation-timeline: var(--tl-hero);
+        animation-range: exit 0% exit 90%;
+      }
+
+      .hero__line:nth-child(even) {
+        animation-name: part-right;
+      }
+    }
   }
 </style>

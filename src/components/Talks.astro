@@ -12,17 +12,16 @@ const { talks } = Astro.props;
   {
     talks.map((talk) => (
       <li class="row">
-        <p class="row__label">{talk.year}</p>
+        <p class="row__label">
+          {talk.year} · {talk.event}
+        </p>
         <div class="row__body">
-          <p class="talks__event">Speaker · {talk.event}</p>
-          <p>{talk.title}</p>
-          {
-            talk.slidesUrl && (
-              <a class="talks__slides" href={talk.slidesUrl} target="_blank" rel="noopener noreferrer">
-                slides →
-              </a>
-            )
-          }
+          <h3 class="talks__title">{talk.title}</h3>
+          {talk.slidesUrl && (
+            <a class="talks__slides" href={talk.slidesUrl} target="_blank" rel="noopener noreferrer">
+              slides <span class="arrow arrow--out" aria-hidden="true">↗</span>
+            </a>
+          )}
         </div>
       </li>
     ))
@@ -34,24 +33,24 @@ const { talks } = Astro.props;
     list-style: none;
   }
 
-  .talks__event {
-    font-family: var(--font-display);
+  .talks__title {
+    font-size: var(--text-lg);
     font-weight: 700;
-    line-height: 1.3;
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
   }
 
   .talks__slides {
     display: inline-block;
-    margin-top: var(--space-xs);
+    margin-top: var(--space-sm);
+    padding-block: var(--space-2xs);
     font-family: var(--font-mono);
     font-size: var(--text-sm);
-    color: var(--color-accent);
     text-decoration-color: var(--color-accent);
   }
 
-  .talks__slides:hover,
-  .talks__slides:active {
+  .talks__slides .arrow {
     color: var(--color-accent);
-    text-decoration-color: var(--color-ink);
   }
 </style>

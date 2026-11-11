@@ -30,16 +30,15 @@ const navLinks = [
     <Hero name={profile.name} lede={profile.about.lede} />
 
     <Split id="about" title="about">
-      <div class="prose about">
-        <p>{profile.about.body}</p>
-      </div>
+      {/* The inner span is the single inline box the reading-ink effect fills. */}
+      <p class="about ink"><span>{profile.about.body}</span></p>
     </Split>
 
-    <Split id="experience" title="experience" reverse>
+    <Split id="experience" title="experience">
       <Experience roles={profile.experience} />
     </Split>
 
-    <Split id="talks" title="talks" reverse>
+    <Split id="talks" title="talks">
       <Talks talks={profile.talks} />
     </Split>
 
@@ -52,8 +51,12 @@ const navLinks = [
 
 <style>
   .about {
-    font-size: var(--text-md);
-    line-height: 1.5;
-    max-width: 52ch;
+    font-family: var(--font-display);
+    font-size: var(--text-lede);
+    font-weight: 500;
+    line-height: 1.22;
+    letter-spacing: -0.025em;
+    max-width: 30ch;
+    text-wrap: pretty;
   }
 </style>

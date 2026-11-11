@@ -1,6 +1,7 @@
 ---
-/* N7 · Brutal slab: heavy full-width bar, thick rule, lowercase link row, filled CTA.
- * No wordmark: the hero heading right below already carries the name. */
+/* Sticky hairline bar: link row, quiet outlined CTA, and a reading-progress
+ * line along its bottom edge. No wordmark: the hero heading right below
+ * already carries the name. */
 interface Props {
   links?: { label: string; href: string }[];
 }
@@ -25,25 +26,56 @@ const { links = [] } = Astro.props;
         </nav>
       )
     }
-    <a class="cta-fill slab__cta" href="#contact">contact</a>
+    <a class="cta-outline slab__cta" href="#contact">contact</a>
   </div>
 </header>
 
 <style>
   .slab {
-    border-bottom: var(--rule-thick) solid var(--color-rule);
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: color-mix(in oklch, var(--color-paper) 78%, transparent);
+    -webkit-backdrop-filter: blur(14px) saturate(1.4);
+    backdrop-filter: blur(14px) saturate(1.4);
+    border-bottom: var(--rule-thin) solid var(--color-line);
+  }
+
+  /* Reading progress: the accent line grows with the page scroll. */
+  .slab::after {
+    content: '';
+    position: absolute;
+    inset: auto 0 calc(-1 * var(--rule-thin));
+    height: var(--rule-thick);
+    background: var(--color-accent);
+    transform-origin: left;
+    scale: 0 1;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    @supports (animation-timeline: scroll()) {
+      .slab::after {
+        animation: progress linear both;
+        animation-timeline: var(--tl-page);
+      }
+    }
+  }
+
+  @keyframes progress {
+    to {
+      scale: 1 1;
+    }
   }
 
   .slab__inner {
     display: flex;
     align-items: center;
     gap: var(--space-lg);
-    padding-block: var(--space-sm);
+    min-height: var(--nav-h);
   }
 
   .slab__nav {
     display: none;
-    margin-left: auto;
   }
 
   .slab__nav ul {
@@ -52,25 +84,35 @@ const { links = [] } = Astro.props;
     list-style: none;
   }
 
+  /* Underline wipes in from the left on hover. */
   .slab__nav a {
     font-family: var(--font-display);
-    font-weight: 600;
+    font-weight: 500;
     font-size: var(--text-base);
     text-decoration: none;
+    padding-block: var(--space-2xs);
+    background: linear-gradient(currentColor, currentColor) no-repeat 0 100% / 0 var(--rule-thin);
+    transition: background-size 320ms var(--ease-out);
   }
 
-  .slab__nav a:hover {
-    text-decoration-line: underline;
+  .slab__nav a:hover,
+  .slab__nav a:focus-visible {
+    background-size: 100% var(--rule-thin);
   }
 
   .slab__cta {
     margin-left: auto;
-    padding: var(--space-xs) var(--space-md);
   }
 
-  @media (min-width: 48rem) {
+  @media (min-width: 40rem) {
     .slab__nav {
       display: block;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .slab__nav a {
+      transition: none;
     }
   }
 </style>

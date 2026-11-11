@@ -18,13 +18,13 @@ export const profile = {
   role: 'Senior Product Engineer',
   location: 'Valencia, Spain',
   description:
-    'Jose Fernández Alhama, Senior Product Engineer at Mercadona Tech, based in Valencia. Product engineering across the stack, payments and checkout.',
+    'Jose Fernández Alhama, Senior Product Engineer at Mercadona Tech, based in Valencia. Product engineering across the stack.',
 
   about: {
     lede:
-      'Senior Product Engineer at Mercadona Tech, based in Valencia — originally from Córdoba, Spain. Five-plus years building software across the stack for e-commerce, SaaS and regulated industries, with a product brain and a habit of asking what actually moves the needle.',
+      'Senior product engineer at Mercadona Tech, based in Valencia. I build across the stack, and I’m usually the engineer asking what it’s for.',
     body:
-      'I care about the intersection of engineering and product: understanding users, making smart tradeoffs and shipping software that matters. I work with fast feedback loops, clean and maintainable code and close collaboration. XP practices like TDD, pair programming and CI/CD are tools I use to keep delivery predictable, not dogma. I’m at my best contributing beyond the ticket: shaping the problem, challenging assumptions and helping the team move faster together.',
+      'Five-plus years building software for e-commerce, SaaS and pharma. I spend as much time on the problem as on the code, and I’d rather cut a feature than ship one nobody asked for. TDD, pairing and small releases are how I keep shipping boring. Born in Córdoba, living in Valencia.',
   },
 
   socials: [
@@ -41,8 +41,8 @@ export const profile = {
       start: 'May 2025',
       end: 'Present',
       bullets: [
-        'Working at the checkout team, improving conversion for Mercadona’s online store, integrating payment systems and owning the address and authentication flows.',
-        'Untangling heavy legacy through continuous refactoring, so the codebase gets simpler without delivery ever pausing for a rewrite.',
+        'Checkout team: conversion, payment integrations, and the address and login flows of Mercadona’s online store.',
+        'Refactoring a heavy legacy codebase a little every day, so delivery never pauses for a rewrite.',
       ],
       stack: ['Python', 'Django', 'PostgreSQL', 'React', 'Kubernetes'],
     },
@@ -53,9 +53,9 @@ export const profile = {
       start: 'Apr 2023',
       end: 'May 2025',
       bullets: [
-        'Reduced system complexity by refactoring towards a modular monolith and applying engineering best practices, which led to a dramatic improvement in delivery speed.',
-        'Key role in launching a new vertical, a supplier marketplace for the pharma industry, from inception to delivery: product definition, architecture decisions and day-to-day execution.',
-        'Mentored interns joining the team, pairing with them on day-to-day delivery.',
+        'Helped launch a supplier marketplace for pharma, from product definition to architecture to daily delivery.',
+        'Refactored towards a modular monolith, and delivery got much faster.',
+        'Mentored interns by pairing with them on real work.',
       ],
       stack: ['TypeScript', 'NestJS', 'React', 'Next.js', 'Kubernetes', 'PostgreSQL'],
     },
@@ -66,8 +66,8 @@ export const profile = {
       start: 'Jan 2022',
       end: 'Apr 2023',
       bullets: [
-        'Subscriptions and payments team: built and maintained billing flows and integrations with payment providers.',
-        'Contributed to the product’s move from a single-account model to multi-user workspaces, opening it up to teams.',
+        'Subscriptions and payments: billing flows and payment-provider integrations.',
+        'Part of the move from single accounts to multi-user workspaces, which opened the product to teams.',
       ],
       stack: ['TypeScript', 'Express', 'React', 'Kubernetes'],
     },
@@ -78,8 +78,8 @@ export const profile = {
       start: 'Nov 2020',
       end: 'Jan 2022',
       bullets: [
-        'Started as QA Trainee and progressed to QA Tester, contributing to test strategy and quality processes across the product.',
-        'Built an end-to-end test suite with Cypress covering the product’s different areas.',
+        'Joined as a QA trainee, became a tester, and helped shape test strategy across the product.',
+        'Built the end-to-end suite in Cypress.',
       ],
       stack: ['Cypress', 'React', 'Kubernetes'],
     },

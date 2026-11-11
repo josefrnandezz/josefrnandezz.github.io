@@ -33,20 +33,24 @@
  *   Variable (el usuario descartó Fraunces).
  */
 :root {
-  /* Papel frío casi neutro, tinta near-black fría, una sola tinta teal de
-     chroma baja: llamativa por contraste, no por saturación.
-     accent-2 es el mismo hue casi desaturado: profundidad, no segundo color.
-     Sin negro ni blanco puros. */
-  --color-paper: oklch(97.5% 0.004 200);
-  --color-paper-2: oklch(93.5% 0.008 200);
-  --color-ink: oklch(20% 0.012 230);
-  --color-rule: oklch(20% 0.012 230);
-  --color-muted: oklch(47% 0.014 230);
-  --color-accent: oklch(49% 0.08 205);
-  --color-on-accent: oklch(97.5% 0.004 200);
-  --color-accent-2: oklch(33% 0.028 220);
-  --color-on-accent-2: oklch(97.5% 0.004 200);
-  --color-focus: oklch(49% 0.08 205);
+  /* Palette 2026-11-11 (replaces the teal described above): monochrome plus
+     one signal. Warm near-white paper, warm near-black ink, and a single
+     vermilion used on very little: the first name, the progress line, hover
+     and selection. The contact band is ink, not accent, so the page ends by
+     inverting. Text on the accent is ink, never paper (paper fails AA on it).
+     No pure black or white. */
+  --color-paper: oklch(98% 0.004 85);
+  --color-paper-2: oklch(94.5% 0.006 85);
+  --color-ink: oklch(19% 0.006 85);
+  --color-rule: oklch(19% 0.006 85);
+  --color-muted: oklch(48% 0.008 85);
+  --color-accent: oklch(60% 0.21 34);
+  --color-on-accent: oklch(19% 0.006 85);
+  --color-accent-2: oklch(35% 0.008 85);
+  --color-on-accent-2: oklch(98% 0.004 85);
+  --color-focus: oklch(56% 0.21 34);
+  --color-band: var(--color-ink);
+  --color-on-band: var(--color-paper);
 
   --font-display: 'Bricolage Grotesque Variable', ui-sans-serif, system-ui, sans-serif;
   --font-body: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
@@ -59,8 +63,9 @@
   --text-lg: 1.5625rem;
   --text-xl: 1.9531rem;
   --text-2xl: 2.4414rem;
-  --text-display: clamp(2.75rem, 6.5vw, 5.75rem);
-  --text-statement: clamp(1.4rem, 7.5vw, 4.5rem);
+  --text-display: clamp(3.25rem, 8.4vw, 7.75rem);
+  --text-statement: clamp(1.4rem, 7.5vw, 5.5rem);
+  --text-lede: clamp(1.5rem, 3.1vw, 2.5rem);
 
   /* Spacing, 4pt */
   --space-2xs: 0.25rem;
@@ -72,30 +77,45 @@
   --space-2xl: 4rem;
   --space-3xl: 6rem;
 
-  --rule-thin: 2px;
-  --rule-thick: 3px;
+  /* Minimal pass 2026-11-11: hairlines instead of slabs. Rules are 1px and
+     drawn in a translucent ink, so structure reads as spacing, not as boxes. */
+  --color-line: color-mix(in oklch, var(--color-ink) 16%, transparent);
+  --color-faint: color-mix(in oklch, var(--color-ink) 20%, transparent);
+
+  --rule-thin: 1px;
+  --rule-thick: 2px;
   --radius: 0;
 
   --measure: 65ch;
-  --page-gutter: clamp(1rem, 4vw, 4rem);
-  --page-max: 76rem;
+  --page-gutter: clamp(1.25rem, 4vw, 4rem);
+  --page-max: 82rem;
   --label-col: 10.5rem;
+  --nav-h: 3.5rem;
+
+  /* Scroll timelines go through custom properties on purpose. Written as
+     literals, the CSS minifier folds `animation-timeline` into the `animation`
+     shorthand, which no browser accepts, and the animation silently dies. */
+  --tl-view: view();
+  --tl-page: scroll(root);
+  --tl-ink: --ink;
+  --tl-hero: --hero;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
-  --dur-micro: 120ms;
+  --dur-micro: 160ms;
+  --dur-enter: 1000ms;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --color-paper: oklch(17% 0.012 230);
-    --color-paper-2: oklch(22% 0.014 230);
-    --color-ink: oklch(95% 0.006 200);
-    --color-rule: oklch(95% 0.006 200);
-    --color-muted: oklch(72% 0.012 220);
-    --color-accent: oklch(75% 0.095 190);
-    --color-on-accent: oklch(17% 0.012 230);
-    --color-accent-2: oklch(66% 0.028 220);
-    --color-on-accent-2: oklch(17% 0.012 230);
-    --color-focus: oklch(75% 0.095 190);
+    --color-paper: oklch(16% 0.005 85);
+    --color-paper-2: oklch(21% 0.006 85);
+    --color-ink: oklch(95% 0.005 85);
+    --color-rule: oklch(95% 0.005 85);
+    --color-muted: oklch(70% 0.008 85);
+    --color-accent: oklch(70% 0.19 40);
+    --color-on-accent: oklch(16% 0.005 85);
+    --color-accent-2: oklch(70% 0.008 85);
+    --color-on-accent-2: oklch(16% 0.005 85);
+    --color-focus: oklch(70% 0.19 40);
   }
 }

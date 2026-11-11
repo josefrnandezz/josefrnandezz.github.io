@@ -10,6 +10,18 @@ html {
   overflow-x: clip;
   color-scheme: light dark;
   -webkit-text-size-adjust: 100%;
+  scroll-padding-top: calc(var(--nav-h) + var(--space-md));
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    scroll-behavior: smooth;
+  }
+}
+
+/* Cross-fade between the home page and a post. CSS only, no router. */
+@view-transition {
+  navigation: auto;
 }
 
 body {
@@ -21,12 +33,19 @@ body {
   font-size: var(--text-base);
   font-weight: 400;
   line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
 }
 
 @media (prefers-color-scheme: dark) {
   body {
     font-weight: 350;
   }
+}
+
+::selection {
+  background: var(--color-accent);
+  color: var(--color-on-accent);
 }
 
 /* Display type is lowercase on purpose: it is the page's voice. */
@@ -54,9 +73,11 @@ a {
   color: inherit;
   text-decoration-line: underline;
   text-decoration-thickness: var(--rule-thin);
-  text-decoration-color: var(--color-ink);
-  text-underline-offset: 0.18em;
-  transition: text-decoration-color var(--dur-micro) var(--ease-out);
+  text-decoration-color: var(--color-faint);
+  text-underline-offset: 0.22em;
+  transition:
+    color var(--dur-micro) var(--ease-out),
+    text-decoration-color var(--dur-micro) var(--ease-out);
 }
 
 a:hover {
@@ -70,12 +91,13 @@ a:active {
 
 :focus-visible {
   outline: 2px solid var(--color-focus);
-  outline-offset: 2px;
+  outline-offset: 3px;
 }
 
-/* Layout: left-biased page column, never centred. */
+/* Layout: one centred page column. */
 .wrap {
   max-width: var(--page-max);
+  margin-inline: auto;
   padding-inline: var(--page-gutter);
 }
 
@@ -106,58 +128,88 @@ a:active {
   color: var(--color-paper);
   font-family: var(--font-mono);
   font-size: var(--text-sm);
-  z-index: 10;
+  z-index: 20;
 }
 
 .skip:focus-visible {
   top: var(--space-xs);
 }
 
-/* CTAs: outlined chip (page) and filled slab (nav, contact). Square corners. */
+/* An arrow that leans into the direction of travel on hover. */
+.arrow {
+  display: inline-block;
+  transition: translate 320ms var(--ease-out);
+}
+
+a:hover > .arrow,
+a:focus-visible > .arrow {
+  translate: 0.3em 0;
+}
+
+a:hover > .arrow--out,
+a:focus-visible > .arrow--out {
+  translate: 0.18em -0.18em;
+}
+
+/* CTAs: ink slab (page) and quiet outline (nav). Square corners. */
 .cta-outline,
 .cta-fill {
   display: inline-block;
   font-family: var(--font-display);
-  font-weight: 700;
+  font-weight: 600;
   line-height: 1;
   text-decoration: none;
   white-space: nowrap;
-  transition: transform var(--dur-micro) var(--ease-out);
+  transition:
+    background-color 240ms var(--ease-out),
+    color 240ms var(--ease-out),
+    border-color 240ms var(--ease-out);
 }
 
 .cta-outline {
-  padding: var(--space-sm) var(--space-lg);
-  border: var(--rule-thin) solid var(--color-ink);
+  padding: var(--space-xs) var(--space-md);
+  border: var(--rule-thin) solid var(--color-line);
 }
 
 .cta-fill {
-  padding: var(--space-sm) var(--space-lg);
+  padding: var(--space-md) var(--space-lg);
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+.cta-outline:hover {
+  border-color: var(--color-ink);
+}
+
+.cta-fill:hover {
   background: var(--color-accent);
   color: var(--color-on-accent);
 }
 
-.cta-outline:hover {
-  background: var(--color-ink);
-  color: var(--color-paper);
-}
-
-.cta-fill:hover {
-  background: var(--color-ink);
-  color: var(--color-paper);
-}
-
 .cta-outline:active,
 .cta-fill:active {
-  transform: translateY(1px);
-  color: var(--color-paper);
+  color: var(--color-accent);
 }
 
-/* Rows: 2px rule above, narrow label column on wide viewports. */
+.cta-fill:active {
+  color: var(--color-on-accent);
+}
+
+/* Rows: hairline above, narrow label column on wide viewports. */
 .row {
+  position: relative;
   display: grid;
   gap: var(--space-xs) var(--space-lg);
-  padding-block: var(--space-lg);
-  border-top: var(--rule-thin) solid var(--color-rule);
+  padding-block: var(--space-lg) var(--space-xl);
+}
+
+.row::before {
+  content: '';
+  position: absolute;
+  inset: 0 0 auto;
+  height: var(--rule-thin);
+  background: var(--color-line);
+  transform-origin: left;
 }
 
 @media (min-width: 40rem) {
@@ -179,35 +231,86 @@ a:active {
   max-width: var(--measure);
 }
 
-/* Scroll reveal, CSS only. Progressive: no support means no motion. */
-@supports (animation-timeline: view()) {
-  @media (prefers-reduced-motion: no-preference) {
-    .reveal {
-      animation: reveal linear both;
-      animation-timeline: view();
-      animation-range: entry 0% entry 28%;
-    }
+/* ── Motion ──────────────────────────────────────────────────────────────
+ * All of it is CSS. Two families:
+ *   1. load choreography (plain keyframes, runs once)
+ *   2. scroll-driven (animation-timeline), progressive: browsers without it
+ *      simply render the finished state.
+ * Everything sits behind prefers-reduced-motion: no-preference. */
 
-    .reveal--late {
-      animation-range: entry 8% entry 40%;
-    }
+@keyframes rise {
+  from {
+    translate: 0 110%;
   }
 }
 
-@keyframes reveal {
+@keyframes fade-up {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    translate: 0 1.25rem;
   }
+}
 
+@keyframes draw {
+  from {
+    scale: 0 1;
+  }
+}
+
+@keyframes ink {
   to {
-    opacity: 1;
-    transform: none;
+    background-size:
+      100% 100%,
+      100% 100%;
+  }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  @supports (animation-timeline: view()) {
+    .reveal {
+      animation: fade-up linear both;
+      animation-timeline: var(--tl-view);
+      animation-range: entry 0% cover 22%;
+    }
+
+    .row {
+      animation: fade-up linear both;
+      animation-timeline: var(--tl-view);
+      animation-range: entry 0% cover 24%;
+    }
+
+    /* The hairline draws itself from the left a beat behind the row. */
+    .row::before {
+      animation: draw linear both;
+      animation-timeline: var(--tl-view);
+      animation-range: entry 0% cover 34%;
+    }
+
+    /* Reading ink: the paragraph starts as a faint trace and fills with ink
+       line by line as it crosses the viewport. One inline box, so the
+       gradient runs through the lines in reading order. The timeline belongs
+       to the paragraph: an inline box cannot be a view-timeline subject. */
+    .ink {
+      view-timeline: --ink block;
+    }
+
+    .ink > span {
+      color: transparent;
+      background:
+        linear-gradient(var(--color-ink), var(--color-ink)) no-repeat 0 0 / 0% 100%,
+        linear-gradient(var(--color-faint), var(--color-faint));
+      -webkit-background-clip: text;
+      background-clip: text;
+      animation: ink linear both;
+      animation-timeline: var(--tl-ink);
+      animation-range: cover 22% cover 62%;
+    }
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   a,
+  .arrow,
   .cta-outline,
   .cta-fill {
     transition: none;
@@ -245,7 +348,7 @@ a:active {
 }
 
 .prose blockquote {
-  border-left: var(--rule-thick) solid var(--color-accent-2);
+  border-left: var(--rule-thick) solid var(--color-accent);
   padding-left: var(--space-md);
   color: var(--color-muted);
 }
@@ -260,7 +363,7 @@ a:active {
   font-size: var(--text-sm);
   line-height: 1.5;
   padding: var(--space-md);
-  border: var(--rule-thin) solid var(--color-rule);
+  border: var(--rule-thin) solid var(--color-line);
   overflow-x: auto;
 }
 
