@@ -1,6 +1,6 @@
 # josefrnandezz.github.io
 
-Personal site of Jose Fernández Alhama. Static, no client-side JavaScript.
+Personal site of Jose Fernández Alhama. Static; the only client-side JavaScript is a small inline script for the light/dark switch.
 
 ## Stack
 

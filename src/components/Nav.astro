@@ -1,5 +1,5 @@
 ---
-/* Sticky hairline bar: link row, quiet outlined CTA, and a reading-progress
+/* Sticky hairline bar: link row, theme switch, quiet outlined CTA, and a reading-progress
  * line along its bottom edge. No wordmark: the hero heading right below
  * already carries the name. */
 interface Props {
@@ -26,7 +26,13 @@ const { links = [] } = Astro.props;
         </nav>
       )
     }
-    <a class="cta-outline slab__cta" href="#contact">contact</a>
+    <button class="theme-toggle" type="button" data-theme-toggle aria-label="Switch between light and dark theme">
+      <svg viewBox="0 0 20 20" width="18" height="18" aria-hidden="true">
+        <circle cx="10" cy="10" r="8" fill="none" stroke="currentColor" stroke-width="1.5"></circle>
+        <path d="M10 2a8 8 0 0 1 0 16z" fill="currentColor"></path>
+      </svg>
+    </button>
+    <a class="cta-outline" href="#contact">contact</a>
   </div>
 </header>
 
@@ -100,8 +106,38 @@ const { links = [] } = Astro.props;
     background-size: 100% var(--rule-thin);
   }
 
-  .slab__cta {
+  /* Theme switch: a half-filled disc that turns over when the theme flips. */
+  .theme-toggle {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
     margin-left: auto;
+    margin-right: calc(-1 * var(--space-xs));
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--color-muted);
+    cursor: pointer;
+    transition: color var(--dur-micro) var(--ease-out);
+  }
+
+  .theme-toggle:hover {
+    color: var(--color-ink);
+  }
+
+  .theme-toggle svg {
+    transition: rotate 480ms var(--ease-out);
+  }
+
+  :global(html[data-theme='dark']) .theme-toggle svg {
+    rotate: 180deg;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(html:not([data-theme='light'])) .theme-toggle svg {
+      rotate: 180deg;
+    }
   }
 
   @media (min-width: 40rem) {

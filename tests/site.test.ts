@@ -59,8 +59,11 @@ describe('home page (no posts)', () => {
     expect(html).not.toContain('joseferr8@gmail.com');
   });
 
-  it('ships no client-side JavaScript', () => {
-    expect(html).not.toContain('<script');
+  it('ships no JavaScript beyond the inline theme switch', () => {
+    const scripts = html.match(/<script[^>]*>/g) ?? [];
+    expect(scripts).toEqual(['<script>']);
+    expect(html).toContain('data-theme-toggle');
+    expect(html).toContain("localStorage.getItem('theme')");
   });
 
   it('hides the writing section when there are no posts', () => {

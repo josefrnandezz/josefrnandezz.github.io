@@ -38,17 +38,20 @@
      vermilion used on very little: the first name, the progress line, hover
      and selection. The contact band is ink, not accent, so the page ends by
      inverting. Text on the accent is ink, never paper (paper fails AA on it).
-     No pure black or white. */
-  --color-paper: oklch(98% 0.004 85);
-  --color-paper-2: oklch(94.5% 0.006 85);
-  --color-ink: oklch(19% 0.006 85);
-  --color-rule: oklch(19% 0.006 85);
-  --color-muted: oklch(48% 0.008 85);
-  --color-accent: oklch(60% 0.21 34);
-  --color-on-accent: oklch(19% 0.006 85);
-  --color-accent-2: oklch(35% 0.008 85);
-  --color-on-accent-2: oklch(98% 0.004 85);
-  --color-focus: oklch(56% 0.21 34);
+     No pure black or white.
+     Each colour is light-dark(light, dark). Which side applies follows the
+     `color-scheme` set on <html> in global.css: the system preference by
+     default, or the visitor's choice from the nav switch. */
+  --color-paper: light-dark(oklch(98% 0.004 85), oklch(16% 0.005 85));
+  --color-paper-2: light-dark(oklch(94.5% 0.006 85), oklch(21% 0.006 85));
+  --color-ink: light-dark(oklch(19% 0.006 85), oklch(95% 0.005 85));
+  --color-rule: light-dark(oklch(19% 0.006 85), oklch(95% 0.005 85));
+  --color-muted: light-dark(oklch(48% 0.008 85), oklch(70% 0.008 85));
+  --color-accent: light-dark(oklch(60% 0.21 34), oklch(70% 0.19 40));
+  --color-on-accent: light-dark(oklch(19% 0.006 85), oklch(16% 0.005 85));
+  --color-accent-2: light-dark(oklch(35% 0.008 85), oklch(70% 0.008 85));
+  --color-on-accent-2: light-dark(oklch(98% 0.004 85), oklch(16% 0.005 85));
+  --color-focus: light-dark(oklch(56% 0.21 34), oklch(70% 0.19 40));
   --color-band: var(--color-ink);
   --color-on-band: var(--color-paper);
 
@@ -103,19 +106,4 @@
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
   --dur-micro: 160ms;
   --dur-enter: 1000ms;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --color-paper: oklch(16% 0.005 85);
-    --color-paper-2: oklch(21% 0.006 85);
-    --color-ink: oklch(95% 0.005 85);
-    --color-rule: oklch(95% 0.005 85);
-    --color-muted: oklch(70% 0.008 85);
-    --color-accent: oklch(70% 0.19 40);
-    --color-on-accent: oklch(16% 0.005 85);
-    --color-accent-2: oklch(70% 0.008 85);
-    --color-on-accent-2: oklch(16% 0.005 85);
-    --color-focus: oklch(70% 0.19 40);
-  }
 }

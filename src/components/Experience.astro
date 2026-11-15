@@ -96,8 +96,14 @@ function logoSrc(company: string): string | undefined {
 
   /* Dark marks (a black glyph on transparent) vanish on dark paper: give
      every mark a light chip to sit on. */
+  :global(html[data-theme='dark']) .company img {
+    background: var(--color-ink);
+    padding: 2px;
+    border-radius: 3px;
+  }
+
   @media (prefers-color-scheme: dark) {
-    .company img {
+    :global(html:not([data-theme='light'])) .company img {
       background: var(--color-ink);
       padding: 2px;
       border-radius: 3px;

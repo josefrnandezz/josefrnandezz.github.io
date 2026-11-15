@@ -27,6 +27,30 @@ const canonical = Astro.site ? new URL(Astro.url.pathname, Astro.site).href : As
     <meta property="og:description" content={description} />
     <meta property="og:url" content={canonical} />
     <meta name="twitter:card" content="summary" />
+    {/* The page's only script: the light/dark switch. Inline and in the head
+        so a stored choice applies before first paint. Without it the page
+        simply follows the system preference. */}
+    <script is:inline>
+      (() => {
+        const root = document.documentElement;
+        const system = matchMedia('(prefers-color-scheme: dark)');
+        let stored = null;
+        try {
+          stored = localStorage.getItem('theme');
+        } catch {}
+        if (stored === 'light' || stored === 'dark') root.dataset.theme = stored;
+
+        document.addEventListener('click', (event) => {
+          if (!event.target.closest('[data-theme-toggle]')) return;
+          const current = root.dataset.theme || (system.matches ? 'dark' : 'light');
+          const next = current === 'dark' ? 'light' : 'dark';
+          root.dataset.theme = next;
+          try {
+            localStorage.setItem('theme', next);
+          } catch {}
+        });
+      })();
+    </script>
   </head>
   <body>
     <a class="skip" href="#main">Skip to content</a>

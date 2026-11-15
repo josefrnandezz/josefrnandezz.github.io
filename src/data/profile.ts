@@ -22,9 +22,9 @@ export const profile = {
 
   about: {
     lede:
-      'Senior product engineer at Mercadona Tech, based in Valencia. I build across the stack, and I’m usually the engineer asking what it’s for.',
+      'Senior product engineer at Mercadona Tech, based in Valencia. I like to understand the problem before I write the code.',
     body:
-      'Five-plus years building software for e-commerce, SaaS and pharma. I spend as much time on the problem as on the code, and I’d rather cut a feature than ship one nobody asked for. TDD, pairing and small releases are how I keep shipping boring. Born in Córdoba, living in Valencia.',
+      'I started in QA, getting paid to break other people’s software. Now I build it, and I still ask too many questions before I write a line of code. I like small steps, simple code and working next to someone. Born in Córdoba, living in Valencia.',
   },
 
   socials: [

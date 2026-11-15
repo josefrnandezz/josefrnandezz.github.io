@@ -6,8 +6,18 @@
   box-sizing: border-box;
 }
 
+html[data-theme='light'] {
+  color-scheme: light;
+}
+
+html[data-theme='dark'] {
+  color-scheme: dark;
+}
+
 html {
   overflow-x: clip;
+  /* Follows the system until the visitor picks a side with the nav switch,
+     which sets data-theme. Every colour token resolves through this. */
   color-scheme: light dark;
   -webkit-text-size-adjust: 100%;
   scroll-padding-top: calc(var(--nav-h) + var(--space-md));
@@ -37,8 +47,13 @@ body {
   text-rendering: optimizeLegibility;
 }
 
+/* Light text on dark paper reads heavier: thin it a touch. */
+html[data-theme='dark'] body {
+  font-weight: 350;
+}
+
 @media (prefers-color-scheme: dark) {
-  body {
+  html:not([data-theme='light']) body {
     font-weight: 350;
   }
 }
@@ -312,7 +327,9 @@ a:focus-visible > .arrow--out {
   a,
   .arrow,
   .cta-outline,
-  .cta-fill {
+  .cta-fill,
+  .theme-toggle,
+  .theme-toggle svg {
     transition: none;
   }
 }
