@@ -24,7 +24,7 @@ export const profile = {
     lede:
       'Senior product engineer at Mercadona Tech, based in Valencia. I like to understand the problem before I write the code.',
     body:
-      'Most of what I’ve built is about people paying for things: checkouts, subscriptions, a marketplace. Some of my favourite features are the ones we decided not to build. I like small steps, simple code and working next to someone. Born in Córdoba, living in Valencia.',
+      'I’ve spent the last few years building web products, mostly around payments and checkouts. I like small steps, simple code and working next to someone. Born in Córdoba, living in Valencia.',
   },
 
   socials: [
