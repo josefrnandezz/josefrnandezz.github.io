@@ -22,9 +22,9 @@ export const profile = {
 
   about: {
     lede:
-      'Senior product engineer at Mercadona Tech, based in Valencia. I like to understand the problem before I write the code.',
+      'Senior Product Engineer. XP practitioner.',
     body:
-      'I’ve spent the last few years building products, mostly around payments and checkouts. I like small steps, simple code and working next to someone. Born in Córdoba, living in Valencia. Outside work it’s mostly cooking and electronic music.',
+      'I’ve spent the last few years building products and owning them end to end, as part of the team. Small steps, simple code. Born in Córdoba, living in Valencia. Outside work it’s mostly cooking and electronic music.',
   },
 
   socials: [
@@ -55,7 +55,6 @@ export const profile = {
       bullets: [
         'Kept building the supplier marketplace, from discovery with product to architecture to daily delivery.',
         'Worked on a second vertical: analytics for pharma suppliers.',
-        'Owned projects end to end and worked with product, leadership and other teams to shape what we built, not only how.',
         'Mentored junior engineers and interns by pairing with them on real work, and looked after the team’s working agreements.',
       ],
       stack: ['TypeScript', 'NestJS', 'React', 'Next.js', 'Kubernetes', 'PostgreSQL'],
