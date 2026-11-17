@@ -35,7 +35,7 @@ export const profile = {
 
   experience: [
     {
-      title: 'Senior Software Engineer',
+      title: 'Senior Product Engineer',
       company: 'Mercadona Tech',
       companyUrl: 'https://www.mercadonatech.com/',
       start: 'May 2025',
