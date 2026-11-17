@@ -47,7 +47,7 @@ describe('home page (no posts)', () => {
   });
 
   it('says where he is based', () => {
-    expect(text).toContain('based in Valencia');
+    expect(text).toContain('living in Valencia');
     expect(text).toContain('valencia, spain');
   });
 
